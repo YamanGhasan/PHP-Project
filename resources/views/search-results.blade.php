@@ -15,7 +15,7 @@
                 <div class="movie-card">
                     @if ($movie['media_type'] === 'movie')
                         <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" class="movie-poster" alt="{{ $movie['original_title'] ?? 'Unknown Title' }} Poster">
-                        <h2 class="movie-title">{{ $movie['title'] ?? 'Unknown Title' }}</h2>
+                        <h2 class="movie-title"><a href="{{ route('movie.show', ['id' => $movie['id']]) }}">{{ $movie['title'] }}</a></h2>
                         <div class="movie-details">
                             <span>Release Date:</span> {{ $movie['release_date'] ?? 'Unknown Date' }}
                             <br>
