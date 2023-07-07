@@ -10,24 +10,31 @@ use Illuminate\Support\Facades\Http;
 class MovieController extends Controller
 {
     public function index()
-    {
-        $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-        $client = new Client();
+{
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $client = new Client();
 
-        $url = "https://api.themoviedb.org/3/movie/popular?api_key={$apiKey}";
+    $movieUrl = "https://api.themoviedb.org/3/movie/popular?api_key={$apiKey}";
+    $tvShowUrl = "https://api.themoviedb.org/3/tv/popular?api_key={$apiKey}";
 
-        try {
-            $response = $client->get($url);
-            $data = json_decode($response->getBody(), true);
+    try {
+        $movieResponse = $client->get($movieUrl);
+        $movieData = json_decode($movieResponse->getBody(), true);
+        $movies = $movieData['results'] ?? null;
 
-            $movies = $data['results'] ?? null; // Get the movie results from the response data
+        $tvShowResponse = $client->get($tvShowUrl);
+        $tvShowData = json_decode($tvShowResponse->getBody(), true);
+        $TvShows = $tvShowData['results'] ?? null;
 
-            return view('home')->with('movies', $movies);
-        } catch (\Exception $e) {
-            // Handle any errors that occur during the request
-            return $e->getMessage();
-        }
+        return view('home', compact('movies', 'TvShows'));
+    } catch (\Exception $e) {
+        // Handle any errors that occur during the request
+        return $e->getMessage();
     }
+}
+
+    
+    
 
     public function search(Request $request)
     {
@@ -52,31 +59,47 @@ class MovieController extends Controller
     }
 
     public function show($id)
-    {
-        $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-        $endpoint = "https://api.themoviedb.org/3/movie/{$id}?api_key={$apiKey}";
+{
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $movieEndpoint = "https://api.themoviedb.org/3/movie/{$id}?api_key={$apiKey}";
+    $tvShowEndpoint = "https://api.themoviedb.org/3/tv/{$id}?api_key={$apiKey}";
+    $contentRatingsEndpoint = "https://api.themoviedb.org/3/tv/{$id}/content_ratings?api_key={$apiKey}";
 
-        // Send a GET request to retrieve the movie details
-        $response = Http::get($endpoint);
- 
-        if ($response->successful()) {
-            $movie = $response->json();
+    // Send a GET request to retrieve the movie details
+    $movieResponse = Http::get($movieEndpoint);
+    $tvShowResponse = Http::get($tvShowEndpoint);
+    $contentRatingsResponse = Http::get($contentRatingsEndpoint);
 
-            // Pass the movie details to the view
-            return view('show', [
-                'movie' => $movie
-            ]);
-        } else {
-            // Handle the error response
-            return response()->json(['error' => $response->body()], $response->status());
-        }
+    if ($movieResponse->successful()) {
+        $movie = $movieResponse->json();
+
+        // Pass the movie details to the view
+        return view('show', [
+            'movie' => $movie
+        ]);
+    } elseif ($tvShowResponse->successful()) {
+        $tvShow = $tvShowResponse->json();
+        $contentRatings = $contentRatingsResponse->json();
+
+        // Pass the TV show details and content ratings to the view
+        return view('show', [
+            'tvShow' => $tvShow,
+            'contentRatings' => $contentRatings
+        ]);
+    } else {
+        // Handle the error response
+        $error = $movieResponse->failed() ? $movieResponse->body() : $tvShowResponse->body();
+        return response()->json(['error' => $error], $movieResponse->status() ?: $tvShowResponse->status());
     }
+}
+
+    
 
 
 //     public function show($id)
 // {
 //     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-//     $endpoint = "https://api.themoviedb.org/3/movie/{movie_id}/lists{$id}?api_key={$apiKey}";
+//     $endpoint = "https://api.themoviedb.org/3/tv/{$id}/content_ratings?api_key={$apiKey}";
 
 //     // Send a GET request to retrieve the movie details
 //     $response = Http::get($endpoint);
@@ -96,5 +119,33 @@ class MovieController extends Controller
 //         return response()->json(['error' => $response->body()], $response->status());
 //     }
 // }
+ 
 
+
+public function fetchVideoData()
+{
+    // Retrieve the movie ID from the API or any other source
+    $movieId = '299536';
+
+    // Construct the URL for fetching video data
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794'; // Replace with your actual API key
+    $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
+
+    // Send a GET request to fetch video data
+    $response = Http::get($videoEndpoint);
+    $data = $response->json();
+
+    // Redirect to the video page and pass the data as a parameter
+    return redirect()->route('videoPage', ['data' => json_encode($data)]);
 }
+
+public function showVideoPage(Request $request)
+{
+    $videoData = json_decode($request->input('data'), true);
+    // Handle the video data and pass it to the view
+    // You can customize this part based on your requirements
+
+    return view('video-page', ['videoData' => $videoData]);
+}
+}
+
