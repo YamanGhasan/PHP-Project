@@ -82,8 +82,7 @@ body {
     height: 100vh;
 }
 
-.poster {
- 
+.poster  {
     height: 80vh;
     margin-right: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -112,4 +111,63 @@ body {
 
 .movie-info a:hover {
     text-decoration: underline;
+}
+.containerContent {
+    margin: 2px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    flex: 1;
+ 
+}
+
+ 
+
+.content-descriptors li {
+    margin-bottom: 5px;
+}
+
+.no-descriptors {
+    font-style: italic;
+}
+.descriptor {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #e8e8e8;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+}
+.photo-section {
+    background-size: cover;
+    background-position: center;
+    height: 600px;  
+}
+
+.photo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.watch-video-button {
+ 
+    background-color: #F4C520;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: black ;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 22px;
+    cursor: pointer;
+}
+.blurry-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/thisisWar.jpg');
+    background-size: cover;
+    filter: blur(3px); /* Adjust the blur value as needed */
+    z-index: -1;
 }
