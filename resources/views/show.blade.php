@@ -35,6 +35,20 @@
                 <p>Tagline: {{ $movie['tagline'] }}</p>
                 <p>Vote Average: {{ $movie['vote_average'] }}</p>
                 <p>Vote Count: {{ $movie['vote_count'] }}</p>
+
+                @if (isset($contentRatings['results']) && count($contentRatings['results']) > 0)
+    <h2>Content Descriptors</h2>
+        @foreach ($contentRatings['results'] as $result)
+            @if (isset($result['descriptors']) && is_array($result['descriptors']))
+                @foreach ($result['descriptors'] as $descriptor)
+                    <span class="descriptor">{{ $descriptor }}</span> 
+                @endforeach
+            @endif
+        @endforeach
+     
+@else
+    <p class="no-descriptors">No content descriptors available.</p>
+@endif
             </div>
 
 
@@ -65,11 +79,7 @@
                 <p>Number of Episodes: {{ $tvShow['number_of_episodes'] }}</p>
                 <p>Vote Average: {{ $tvShow['vote_average'] }}</p>
                 <p>Vote Count: {{ $tvShow['vote_count'] }}</p>
-            </div>
-        @endif
-    </div>
-    <div class="containerContent">
-    @if (isset($contentRatings['results']) && count($contentRatings['results']) > 0)
+                @if (isset($contentRatings['results']) && count($contentRatings['results']) > 0)
     <h2>Content Descriptors</h2>
         @foreach ($contentRatings['results'] as $result)
             @if (isset($result['descriptors']) && is_array($result['descriptors']))
@@ -82,11 +92,13 @@
 @else
     <p class="no-descriptors">No content descriptors available.</p>
 @endif
+            </div>
+        @endif
 
-</div>
+ 
 
-
-
+    </div>
+  
 
 
 </body>
