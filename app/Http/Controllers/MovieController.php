@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Favorite;
 
 
 class MovieController extends Controller
 {
+ 
     public function index()
 {
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
@@ -128,7 +132,7 @@ public function fetchVideoData()
     $movieId = '299536';
 
     // Construct the URL for fetching video data
-    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794'; // Replace with your actual API key
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
     $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
 
     // Send a GET request to fetch video data
@@ -147,5 +151,55 @@ public function showVideoPage(Request $request)
 
     return view('video-page', ['videoData' => $videoData]);
 }
+
+
+
+public function addToFavorites($id)
+{
+    if (auth()->check()) {
+        // Retrieve the authenticated user
+        $user = auth()->user();
+
+        // Retrieve the movie details from the API
+        $movie = $this->getMovieDetails($id);
+
+        if ($movie) {
+            // Create a new favorite record
+            $favorite = Favorite::create([
+                'user_id' => $user->id,
+                'movie_id' => $movie['id'],
+                'title' => $movie['title'],
+                'poster_path' => $movie['poster_path'],
+            ]);
+
+            // Redirect back to the movie page with a success message
+            return redirect()->back()->with('message', 'Movie added to favorites.');
+        } else {
+            // Redirect back to the movie page with an error message
+            return redirect()->back()->with('error', 'Failed to retrieve movie details.');
+        }
+    } else {
+        // User is not authenticated, redirect to the login page
+        return redirect()->route('login');
+    }
 }
 
+
+private function getMovieDetails($id)
+{
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $client = new \GuzzleHttp\Client();
+
+    $url = "https://api.themoviedb.org/3/movie/{$id}?api_key={$apiKey}";
+
+    try {
+        $response = $client->get($url);
+        $data = json_decode($response->getBody(), true);
+
+        return $data;
+    } catch (\Exception $e) {
+        // Handle API request errors
+        return null;
+    }
+}
+}
