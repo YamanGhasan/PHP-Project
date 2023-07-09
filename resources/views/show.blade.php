@@ -79,6 +79,7 @@
                 <p>Number of Episodes: {{ $tvShow['number_of_episodes'] }}</p>
                 <p>Vote Average: {{ $tvShow['vote_average'] }}</p>
                 <p>Vote Count: {{ $tvShow['vote_count'] }}</p>
+                
                 @if (isset($contentRatings['results']) && count($contentRatings['results']) > 0)
     <h2>Content Descriptors</h2>
         @foreach ($contentRatings['results'] as $result)
