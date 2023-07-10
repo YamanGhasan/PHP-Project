@@ -28,8 +28,17 @@ Route::get('/profile', [UserMovieController::class, 'profile'])->name('profile')
 Route::get('/logout', [UserMovieController::class, 'logout'])->name('profile.logout');
 
  
-Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])
-    ->name('movies.favorite');
+// Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])
+//     ->name('movies.favorite'); 
+
+Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])->name('movies.favorite');
+Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite');
+
+
+
+// Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
+Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
+
 
 
 
