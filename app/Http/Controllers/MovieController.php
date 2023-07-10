@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Favorite;
+use App\Models\MovieUser;
 
 
+ 
+ 
 class MovieController extends Controller
 {
  
@@ -99,30 +102,7 @@ class MovieController extends Controller
 
     
 
-
-//     public function show($id)
-// {
-//     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-//     $endpoint = "https://api.themoviedb.org/3/tv/{$id}/content_ratings?api_key={$apiKey}";
-
-//     // Send a GET request to retrieve the movie details
-//     $response = Http::get($endpoint);
-
-//     if ($response->successful()) {
-//         $movie = $response->json();
-
-//         // Display the API result in the console
-//         dd($movie);
-
-//         // Pass the movie details to the view
-//         return view('show', [
-//             'movie' => $movie
-//         ]);
-//     } else {
-//         // Handle the error response
-//         return response()->json(['error' => $response->body()], $response->status());
-//     }
-// }
+ 
  
 
 
@@ -154,36 +134,134 @@ public function showVideoPage(Request $request)
 
 
 
+ 
+//     // working 
 public function addToFavorites($id)
 {
-    if (auth()->check()) {
-        // Retrieve the authenticated user
-        $user = auth()->user();
+    $user = auth()->user();
+    if (!$user) {
+        // Handle case when user is not authenticated
+        return redirect()->back()->with('error', 'User not authenticated.');
+    }
 
-        // Retrieve the movie details from the API
-        $movie = $this->getMovieDetails($id);
+    // Check if the movie is already in the user's favorites
+    if ($user->favorites()->where('movie_id', $id)->exists()) {
+        return redirect()->back()->with('error', 'Movie is already in favorites.');
+    }
 
-        if ($movie) {
-            // Create a new favorite record
-            $favorite = Favorite::create([
-                'user_id' => $user->id,
-                'movie_id' => $movie['id'],
-                'title' => $movie['title'],
-                'poster_path' => $movie['poster_path'],
-            ]);
+    // Retrieve the movie details from the API
+    $movie = $this->getMovieDetails($id);
 
-            // Redirect back to the movie page with a success message
-            return redirect()->back()->with('message', 'Movie added to favorites.');
-        } else {
-            // Redirect back to the movie page with an error message
-            return redirect()->back()->with('error', 'Failed to retrieve movie details.');
-        }
+    if ($movie) {
+        // Create a new favorite record
+        $favorite = $user->favorites()->create([
+            'movie_id' => $movie['id'],
+            'title' => $movie['title'],
+            'poster_path' => $movie['poster_path'],
+        ]);
+
+        // Redirect back to the movie page with a success message
+        return redirect()->back()->with('message', 'Movie added to favorites.');
     } else {
-        // User is not authenticated, redirect to the login page
-        return redirect()->route('login');
+        // Redirect back to the movie page with an error message
+        return redirect()->back()->with('error', 'Failed to retrieve movie details.');
     }
 }
+public function addToFavoritesTvShow($id)
+{
+    $user = auth()->user();
+    if (!$user) {
+        // Handle case when user is not authenticated
+        return redirect()->back()->with('error', 'User not authenticated.');
+    }
 
+    // Check if the TV show is already in the user's favorites
+    if ($user->favorites()->where('movie_id', $id)->exists()) {
+        return redirect()->back()->with('error', 'TV show is already in favorites.');
+    }
+
+    // Retrieve the TV show details from the API
+    $tvShow = $this->getTvShowDetails($id);
+
+    if ($tvShow) {
+        // Create a new favorite record
+        $favorite = $user->favorites()->create([
+            'movie_id'  => $tvShow['id'],
+            'title' => $tvShow['name'],
+            'poster_path' => $tvShow['poster_path'],
+        ]);
+
+        // Redirect back to the TV show page with a success message
+        return redirect()->back()->with('message', 'TV show added to favorites.');
+    } else {
+        // Redirect back to the TV show page with an error message
+        return redirect()->back()->with('error', 'Failed to retrieve TV show details.');
+    }
+}
+ 
+// public function addToFavorites(Request $request)
+// {
+//     $id = $request->input('id');
+//     $type = $request->input('type');
+//     $user = auth()->user();
+
+//     if (!$user) {
+//         // Handle case when user is not authenticated
+//         return redirect()->back()->with('error', 'User not authenticated.');
+//     }
+
+//     // Check if the movie or TV show is already in the user's favorites
+//     if ($user->favorites()->where('movie_id', $id)->where('type', $type)->exists()) {
+//         return redirect()->back()->with('error', 'Movie or TV show is already in favorites.');
+//     }
+
+//     // Retrieve the movie or TV show details from the API
+//     if ($type === 'movie') {
+//         $details = $this->getMovieDetails($id);
+//     } elseif ($type === 'tv') {
+//         $details = $this->getTVShowDetails($id);
+//     } else {
+//         return redirect()->back()->with('error', 'Invalid type.');
+//     }
+
+//     if ($details) {
+        
+//         // Create a new favorite record
+//         $favorite = $user->favorites()->create([
+//             'movie_id' => $details['id'],
+//             'title' => $details['name'],
+//             'poster_path' => $details['poster_path'],
+//             'type' => $type,
+//         ]);
+
+//         // Redirect back to the movie or TV show page with a success message
+//         return redirect()->back()->with('message', 'Movie or TV show added to favorites.');
+//     } else {
+//         // Redirect back to the movie or TV show page with an error message
+//         return redirect()->back()->with('error', 'Failed to retrieve movie or TV show details.');
+//     }
+// }
+
+
+
+
+private function getTVShowDetails($id)
+{
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $client = new \GuzzleHttp\Client();
+
+    $url = "https://api.themoviedb.org/3/tv/{$id}?api_key={$apiKey}";
+
+    try {
+        $response = $client->get($url);
+        $data = json_decode($response->getBody(), true);
+
+        return $data;
+    } catch (\Exception $e) {
+        // Handle API request errors
+        return null;
+    }
+}
 
 private function getMovieDetails($id)
 {
@@ -202,4 +280,29 @@ private function getMovieDetails($id)
         return null;
     }
 }
+
+
+ 
+
+public function remove($id)
+{
+    // Find the authenticated movie user
+    $user = auth()->user();
+
+    // Find the favorite movie to be removed
+    $favorite = $user->favorites()->where('movie_id', $id)->first();
+
+    if ($favorite) {
+        $favorite->delete();
+
+        // Redirect the user back to the profile page or any other appropriate page
+        return redirect()->route('profile')->with('success', 'Favorite movie removed successfully.');
+    } else {
+        // Handle the case when the favorite movie is not found
+        return redirect()->route('profile')->with('error', 'Favorite movie not found.');
+    }
+}
+
+
+
 }
