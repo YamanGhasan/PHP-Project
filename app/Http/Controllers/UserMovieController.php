@@ -18,8 +18,8 @@ class UserMovieController extends Controller
     public function registeruser(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:50|min:5',
-            'email' => 'required|email|max:100',
+            'username' => 'required|string|max:50|min:5|unique:movie_users',
+            'email' => 'required|email|max:100|unique:movie_users',
             'password' => 'required|string|min:8',
             'age' => 'required|integer|min:18',
         ]);
@@ -48,22 +48,35 @@ class UserMovieController extends Controller
     return view('login');
 }
  
+// public function login(Request $request)
+// {
+//     $credentials = $request->only('email', 'password');
+
+//     $user = MovieUser::where('email', $credentials['email'])->first();
+
+//     if ($user && Hash::check($credentials['password'], $user->password)) {
+//         // Authentication successful
+//         $request->session()->put('username', $user->username);
+//         $request->session()->put('user_id', $user->id);
+//         return redirect()->route('movies.index');
+//     }
+
+//     // Failed login attempt
+//     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
 public function login(Request $request)
 {
     $credentials = $request->only('email', 'password');
-
     $user = MovieUser::where('email', $credentials['email'])->first();
-
-    if ($user && Hash::check($credentials['password'], $user->password)) {
+    if (Auth::attempt($credentials)) {
         // Authentication successful
         $request->session()->put('username', $user->username);
-        $request->session()->put('user_id', $user->id);
         return redirect()->route('movies.index');
     }
 
     // Failed login attempt
     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
 }
+// }
 
 public function profile()
 {
