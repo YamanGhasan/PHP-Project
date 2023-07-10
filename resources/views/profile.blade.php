@@ -60,6 +60,9 @@
   <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
   <h1>User Name:  <span>{{ $user->username }} </span> </h1>
   <p>Age: {{ $user->age }}</p><h1 class="myfavh1">My Favorites</h1>
+  <div>
+            <a href="{{ route('movies.index') }}" class="btn btn-primary">Go to homepage</a>
+        </div>
 </div>
 
 
@@ -70,11 +73,33 @@
             <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" class="movie-poster" alt="{{ $movie['title'] }} poster">
             <p class="movie-details">{{ $movie['overview'] }}</p>
             <p class="movie-details">Release Date: {{ $movie['release_date'] }}</p>
+            <form action="{{ route('remove_favorite', ['id' => $movie['id']]) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="logout-btn">Remove from Favorites</button>
+    </form>
+
         </div>
     @endforeach
+
+
  
+    @foreach ($tvShows as $tvShow)
+        <div class="favorite-movie">
+            <h3>{{ $tvShow['name'] }}</h3>
+            <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['name'] }} poster">
+            <p class="movie-details">{{ $tvShow['overview'] }}</p>
+            <p class="movie-details">First Air Date: {{ $tvShow['first_air_date'] }}</p>
+            <form action="{{ route('remove_favorite', ['id' => $tvShow['id']]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="logout-btn">Remove from Favorites</button>
+            </form>
+        </div>
+    @endforeach
 </div>
-</div>
+
+
 
 </body>
 </html>
