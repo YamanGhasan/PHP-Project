@@ -2,113 +2,220 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
-use App\Models\MovieUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
- 
- 
+use Illuminate\Support\Facades\DB;
+use App\Models\Favorite;
+use App\Models\MovieUser;
 
-class UserMovieController extends Controller
+
+ 
+ 
+class MovieController extends Controller
 {
  
-    public function registeruser(Request $request)
+    public function index()
+{
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $client = new Client();
+
+    $movieUrl = "https://api.themoviedb.org/3/movie/popular?api_key={$apiKey}";
+    $tvShowUrl = "https://api.themoviedb.org/3/tv/popular?api_key={$apiKey}";
+
+    try {
+        $movieResponse = $client->get($movieUrl);
+        $movieData = json_decode($movieResponse->getBody(), true);
+        $movies = $movieData['results'] ?? null;
+
+        $tvShowResponse = $client->get($tvShowUrl);
+        $tvShowData = json_decode($tvShowResponse->getBody(), true);
+        $TvShows = $tvShowData['results'] ?? null;
+
+        return view('home', compact('movies', 'TvShows'));
+    } catch (\Exception $e) {
+        // Handle any errors that occur during the request
+        return $e->getMessage();
+    }
+}
+
+    
+    
+
+    public function search(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:50|min:5|unique:movie_users',
-            'email' => 'required|email|max:100|unique:movie_users',
-            'password' => 'required|string|min:8',
-            'age' => 'required|integer|min:18',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        $search = $request->input('query');
+        $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
+    
+        $endpoint = "https://api.themoviedb.org/3/search/multi?query={$search}&api_key={$apiKey}";
+    
+        $client = new Client();
+    
+        try {
+            $response = $client->get($endpoint);
+            $data = json_decode($response->getBody(), true);
+    
+            $movies = $data['results'] ?? [];
+    
+            return view('search-results', compact('movies'));
+        } catch (\Exception $e) {
+            // Handle any errors that occur during the request
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $user = MovieUser::create([
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'age' => $request->input('age'),
-        ]);
-
-        // Log in the user
-        Auth::login($user);
-
-        // Add success message to the session
-        Session::flash('success', 'User registered and logged in successfully.');
-
-        return redirect()->route('login');
     }
-    public function showLoginForm()
+
+    public function show($id)
 {
-    return view('login');
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $movieEndpoint = "https://api.themoviedb.org/3/movie/{$id}?api_key={$apiKey}";
+    $tvShowEndpoint = "https://api.themoviedb.org/3/tv/{$id}?api_key={$apiKey}";
+    $contentRatingsEndpoint = "https://api.themoviedb.org/3/tv/{$id}/content_ratings?api_key={$apiKey}";
+
+    // Send a GET request to retrieve the movie details
+    $movieResponse = Http::get($movieEndpoint);
+    $tvShowResponse = Http::get($tvShowEndpoint);
+    $contentRatingsResponse = Http::get($contentRatingsEndpoint);
+
+    if ($movieResponse->successful()) {
+        $movie = $movieResponse->json();
+
+        // Pass the movie details to the view
+        return view('show', [
+            'movie' => $movie
+        ]);
+    } elseif ($tvShowResponse->successful()) {
+        $tvShow = $tvShowResponse->json();
+        $contentRatings = $contentRatingsResponse->json();
+
+        // Pass the TV show details and content ratings to the view
+        return view('show', [
+            'tvShow' => $tvShow,
+            'contentRatings' => $contentRatings
+        ]);
+    } else {
+        // Handle the error response
+        $error = $movieResponse->failed() ? $movieResponse->body() : $tvShowResponse->body();
+        return response()->json(['error' => $error], $movieResponse->status() ?: $tvShowResponse->status());
+    }
 }
- 
-// public function login(Request $request)
+
+    
+
+
+//     public function show($id)
 // {
-//     $credentials = $request->only('email', 'password');
+//     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+//     $endpoint = "https://api.themoviedb.org/3/tv/{$id}/content_ratings?api_key={$apiKey}";
 
-//     $user = MovieUser::where('email', $credentials['email'])->first();
+//     // Send a GET request to retrieve the movie details
+//     $response = Http::get($endpoint);
 
-//     if ($user && Hash::check($credentials['password'], $user->password)) {
-//         // Authentication successful
-//         $request->session()->put('username', $user->username);
-//         $request->session()->put('user_id', $user->id);
-//         return redirect()->route('movies.index');
+//     if ($response->successful()) {
+//         $movie = $response->json();
+
+//         // Display the API result in the console
+//         dd($movie);
+
+//         // Pass the movie details to the view
+//         return view('show', [
+//             'movie' => $movie
+//         ]);
+//     } else {
+//         // Handle the error response
+//         return response()->json(['error' => $response->body()], $response->status());
 //     }
-
-//     // Failed login attempt
-//     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
-public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
-    $user = MovieUser::where('email', $credentials['email'])->first();
-    if (Auth::attempt($credentials)) {
-        // Authentication successful
-        $request->session()->put('username', $user->username);
-        return redirect()->route('movies.index');
-    }
-
-    // Failed login attempt
-    return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
-}
 // }
+ 
 
-public function profile()
+
+public function fetchVideoData()
 {
-    // Retrieve the user's information from the session or database
-    $username = session('username');
-    $user = MovieUser::with('favorites')->where('username', $username)->first();
+    // Retrieve the movie ID from the API or any other source
+    $movieId = '299536';
 
-    // Check if the favorites relationship is loaded
-    if (!$user->relationLoaded('favorites')) {
-        $user->load('favorites');
-    }
+    // Construct the URL for fetching video data
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
+    $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
 
-    // Retrieve the user's favorite movies
-    $favorites = $user->favorites;
+    // Send a GET request to fetch video data
+    $response = Http::get($videoEndpoint);
+    $data = $response->json();
 
-    $movies = [];
-
-    foreach ($favorites as $favorite) {
-        $movieId = $favorite->movie_id;
-        $movie = $this->getMovieDetails($movieId);
-
-        if ($movie) {
-            $movies[] = $movie;
-        }
-    }
-
-    // Pass the user's information and favorites to the view
-    return view('profile', [
-        'user' => $user,
-        'movies' => $movies,
-    ]);
+    // Redirect to the video page and pass the data as a parameter
+    return redirect()->route('videoPage', ['data' => json_encode($data)]);
 }
+
+public function showVideoPage(Request $request)
+{
+    $videoData = json_decode($request->input('data'), true);
+    // Handle the video data and pass it to the view
+    // You can customize this part based on your requirements
+
+    return view('video-page', ['videoData' => $videoData]);
+}
+
+
+
+// public function addToFavorites($id)
+// {
+    
+//         // Retrieve the authenticated user
+//         $user = auth()->user();
+
+//         // Retrieve the movie details from the API
+//         $movie = $this->getMovieDetails($id);
+
+//         if ($movie) {
+//             // Create a new favorite record
+//             $favorite = Favorite::create([
+//                 'user_id' => $user->id,
+//                 'movie_id' => $movie['id'],
+//                 'title' => $movie['title'],
+//                 'poster_path' => $movie['poster_path'],
+//             ]);
+
+//             // Redirect back to the movie page with a success message
+//             return redirect()->back()->with('message', 'Movie added to favorites.');
+//         } else {
+//             // Redirect back to the movie page with an error message
+//             return redirect()->back()->with('error', 'Failed to retrieve movie details.');
+//         }
+//     }  
+    
+public function addToFavorites($id)
+{
+    $user = auth()->user();
+    if (!$user) {
+        // Handle case when user is not authenticated
+        return redirect()->back()->with('error', 'User not authenticated.');
+    }
+
+    // Check if the movie is already in the user's favorites
+    if ($user->favorites()->where('movie_id', $id)->exists()) {
+        return redirect()->back()->with('error', 'Movie is already in favorites.');
+    }
+
+    // Retrieve the movie details from the API
+    $movie = $this->getMovieDetails($id);
+
+    if ($movie) {
+        // Create a new favorite record
+        $favorite = $user->favorites()->create([
+            'movie_id' => $movie['id'],
+            'title' => $movie['title'],
+            'poster_path' => $movie['poster_path'],
+        ]);
+
+        // Redirect back to the movie page with a success message
+        return redirect()->back()->with('message', 'Movie added to favorites.');
+    } else {
+        // Redirect back to the movie page with an error message
+        return redirect()->back()->with('error', 'Failed to retrieve movie details.');
+    }
+}
+
+
 
 private function getMovieDetails($id)
 {
@@ -130,17 +237,38 @@ private function getMovieDetails($id)
 
 
  
-public function logout(Request $request)
+
+public function remove($id)
 {
-    Auth::logout();
+    // Find the authenticated movie user
+    $user = auth()->user();
 
-    $request->session()->invalidate();
+    // Find the favorite movie to be removed
+    $favorite = $user->favorites()->where('movie_id', $id)->first();
 
-    $request->session()->regenerateToken();
+    if ($favorite) {
+        $favorite->delete();
 
-    return redirect('/');
+        // Redirect the user back to the profile page or any other appropriate page
+        return redirect()->route('profile')->with('success', 'Favorite movie removed successfully.');
+    } else {
+        // Handle the case when the favorite movie is not found
+        return redirect()->route('profile')->with('error', 'Favorite movie not found.');
+    }
 }
 
 
- 
+
+
+// public function remove($id)
+// {
+//     // Find the favorite movie to be removed
+//     $favorite = Favorite::findOrFail($id);
+
+//     // Remove the favorite movie from the database
+//     $favorite->delete();
+
+//     // Redirect the user back to the profile page or any other appropriate page
+//     return redirect()->route('profile')->with('success', 'Favorite movie removed successfully.');
+// }
 }
