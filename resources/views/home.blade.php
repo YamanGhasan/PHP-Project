@@ -50,8 +50,12 @@
                         <br> <br>
                         <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie']) }}">
     @csrf
+    <input type="hidden" name="type" value="movie">
     <button type="submit" class="add-favorite-btn">Add to Favorite</button>
 </form>
+
+
+
 
                     </div>
                 </div>
@@ -79,10 +83,15 @@
                        <span class="vote-average">{{ $tvShow['vote_average'] }}</span> <span>⭐</span>
                        <br> <br>
                          <!-- Add to Favorite button -->
-                         <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'tv']) }}">
+                         <form method="POST" action="{{ route('tvshows.favorite', ['id' => $tvShow['id'], 'type' => 'tv']) }}">
     @csrf
+    <input type="hidden" name="type" value="tv">
     <button type="submit" class="add-favorite-btn">Add to Favorite</button>
 </form>
+
+
+
+
 
                     </div>
                 </div>
