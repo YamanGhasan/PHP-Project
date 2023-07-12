@@ -35,7 +35,7 @@ Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTv
 
 Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
 
-
+ 
 
 
 
