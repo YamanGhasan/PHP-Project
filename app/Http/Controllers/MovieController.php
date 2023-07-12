@@ -70,35 +70,44 @@ class MovieController extends Controller
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
     $movieEndpoint = "https://api.themoviedb.org/3/movie/{$id}?api_key={$apiKey}";
     $tvShowEndpoint = "https://api.themoviedb.org/3/tv/{$id}?api_key={$apiKey}";
-    $contentRatingsEndpoint = "https://api.themoviedb.org/3/tv/{$id}/content_ratings?api_key={$apiKey}";
+    $contentRatingsEndpoint = "https://api.themoviedb.org/3/movie/{$id}/content_ratings?api_key={$apiKey}";
+    $recommendationsEndpoint = "https://api.themoviedb.org/3/movie/{$id}/recommendations?api_key={$apiKey}";
+    $recommendationsEndpointTV = "https://api.themoviedb.org/3/tv/{$id}/recommendations?api_key={$apiKey}";
 
     // Send a GET request to retrieve the movie details
     $movieResponse = Http::get($movieEndpoint);
     $tvShowResponse = Http::get($tvShowEndpoint);
     $contentRatingsResponse = Http::get($contentRatingsEndpoint);
+    $recommendationsResponse = Http::get($recommendationsEndpoint);
+    $recommendationsTVResponse = Http::get($recommendationsEndpointTV);
 
     if ($movieResponse->successful()) {
         $movie = $movieResponse->json();
-
+        $contentRatings = $contentRatingsResponse->json();
+        $recommendations = $recommendationsResponse->json();
         // Pass the movie details to the view
         return view('show', [
-            'movie' => $movie
+            'movie' => $movie,
+            'contentRatings' => $contentRatings,
+            'recommendations' => isset($recommendations['results']) ? $recommendations['results'] : [],
         ]);
     } elseif ($tvShowResponse->successful()) {
         $tvShow = $tvShowResponse->json();
         $contentRatings = $contentRatingsResponse->json();
-
-        // Pass the TV show details and content ratings to the view
+        $recommendationsTV = $recommendationsTVResponse->json();
         return view('show', [
             'tvShow' => $tvShow,
-            'contentRatings' => $contentRatings
+            'contentRatings' => $contentRatings,
+            'recommendationsTV' => isset($recommendationsTV['results']) ? $recommendationsTV['results'] : []
         ]);
     } else {
         // Handle the error response
-        $error = $movieResponse->failed() ? $movieResponse->body() : $tvShowResponse->body();
-        return response()->json(['error' => $error], $movieResponse->status() ?: $tvShowResponse->status());
+        $error = $movieResponse->failed() ? $movieResponse->body() : $contentRatingsResponse->body();
+        return response()->json(['error' => $error], $movieResponse->status() ?: $contentRatingsResponse->status());
     }
 }
+
+    
 
     
 
@@ -214,7 +223,6 @@ private function getTVShowDetails($id)
 
         return $data;
     } catch (\Exception $e) {
-        // Handle API request errors
         return null;
     }
 }
@@ -257,6 +265,21 @@ public function remove($id)
     }
 }
 
+// public function recommendations($id)
+// {
+//     $apiKey='22d966b39e45c68b73d1aaa2be9e9794';
+//     $client = new \GuzzleHttp\Client();
+//     $url="https://api.themoviedb.org/3/movie/{movie_id}/recommendations";
+//     try {
+//         $response = $client->get($url);
+//         $data = json_decode($response->getBody(), true);
+
+//         return $data;
+//     } catch (\Exception $e) {
+//         // Handle API request errors
+//         return null;
+//     }
+// }
 
 
 }

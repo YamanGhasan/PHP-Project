@@ -26,7 +26,6 @@ Route::post('/login', [UserMovieController::class, 'login'])->name('login');
 Route::get('/movies/search', [MovieController::class, 'search'])->name('movies.search');
 Route::get('/movie/{id}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('/tvshow/{id}', [MovieController::class, 'show'])->name('tvshow.show');
-
 Route::post('/fetch-video-data', [MovieController::class, 'fetchVideoData'])->name('fetchVideoData');
 Route::get('/video-page', [MovieController::class, 'showVideoPage'])->name('videoPage');
 

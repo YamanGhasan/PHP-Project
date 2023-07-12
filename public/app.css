@@ -69,8 +69,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-background-color: #f4c518;
+ 
+background-color: #121212;
 margin: 30px;
 box-shadow: 0 0 10px rgba(175, 169, 169, 0.2);
 border-radius: 20px;
@@ -117,6 +117,7 @@ border-radius: 20px;
     font-size: 20px;
     padding: 7px;
     border-radius: 5px;
+    text-align: center;
 }
 
 .movie-info h1 {
@@ -258,3 +259,57 @@ border-radius: 20px;
  /* .myfavh1{
     background-color: #F4C520;
  } */
+ .favorite-movie {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    /* background-color : gray; */
+}
+.favorite-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.Recommendations{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    /* background-color : gray; */
+}
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.movie-poster {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+.recommendations-heading {
+    display: block;
+    width: max-content;
+    margin: 0 auto;
+}
+.btns{
+    font-family:  Arial, Helvetica, sans-serif;
+    color: black;
+    text-decoration: none;
+    background-color: #f4c518;
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 4px;
+    font-size:30px;
+  }
+  
+

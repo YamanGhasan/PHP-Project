@@ -7,29 +7,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Profile👤</title>
 <style>
-    .favorite-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .favorite-movie {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        max-width: 300px;
-        margin: 10px;
-        padding: 20px;
-        text-align: center;
-        background-color: #f1f1f1;
-        border-radius: 10px;
-        /* background-color : gray; */
-    }
-
-    .movie-poster {
-        width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-    }
+  
+   
   
 
     .top-right {
@@ -54,16 +33,7 @@
     margin: 10px;
     border-radius: 4px;
   }
-  .btns{
-    font-family:  Arial, Helvetica, sans-serif;
-    color: black;
-    text-decoration: none;
-    background-color: #f4c518;
-    font-size: 20px;
-    margin: 10px;
-    border-radius: 4px;
-    font-size:30px;
-  }
+ 
 </style>
 </head>
 <body>
