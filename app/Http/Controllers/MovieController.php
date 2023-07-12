@@ -199,51 +199,7 @@ public function addToFavoritesTvShow($id)
     }
 }
  
-// public function addToFavorites(Request $request)
-// {
-//     $id = $request->input('id');
-//     $type = $request->input('type');
-//     $user = auth()->user();
-
-//     if (!$user) {
-//         // Handle case when user is not authenticated
-//         return redirect()->back()->with('error', 'User not authenticated.');
-//     }
-
-//     // Check if the movie or TV show is already in the user's favorites
-//     if ($user->favorites()->where('movie_id', $id)->where('type', $type)->exists()) {
-//         return redirect()->back()->with('error', 'Movie or TV show is already in favorites.');
-//     }
-
-//     // Retrieve the movie or TV show details from the API
-//     if ($type === 'movie') {
-//         $details = $this->getMovieDetails($id);
-//     } elseif ($type === 'tv') {
-//         $details = $this->getTVShowDetails($id);
-//     } else {
-//         return redirect()->back()->with('error', 'Invalid type.');
-//     }
-
-//     if ($details) {
-        
-//         // Create a new favorite record
-//         $favorite = $user->favorites()->create([
-//             'movie_id' => $details['id'],
-//             'title' => $details['name'],
-//             'poster_path' => $details['poster_path'],
-//             'type' => $type,
-//         ]);
-
-//         // Redirect back to the movie or TV show page with a success message
-//         return redirect()->back()->with('message', 'Movie or TV show added to favorites.');
-//     } else {
-//         // Redirect back to the movie or TV show page with an error message
-//         return redirect()->back()->with('error', 'Failed to retrieve movie or TV show details.');
-//     }
-// }
-
-
-
+ 
 
 private function getTVShowDetails($id)
 {
@@ -286,19 +242,17 @@ private function getMovieDetails($id)
 
 public function remove($id)
 {
-    // Find the authenticated movie user
     $user = auth()->user();
 
-    // Find the favorite movie to be removed
+   
     $favorite = $user->favorites()->where('movie_id', $id)->first();
 
     if ($favorite) {
         $favorite->delete();
 
-        // Redirect the user back to the profile page or any other appropriate page
         return redirect()->route('profile')->with('success', 'Favorite movie removed successfully.');
     } else {
-        // Handle the case when the favorite movie is not found
+   
         return redirect()->route('profile')->with('error', 'Favorite movie not found.');
     }
 }

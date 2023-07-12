@@ -30,7 +30,9 @@
                 <input type="password" name="password" id="password">
             </div>
             <button type="submit">Login</button>
-        </form>
+      
+        <p>don't have an account yet ! <a href="{{ route('register') }}">Sign up</a></p>
+      </form>
     </main>
 </body>
 </html>

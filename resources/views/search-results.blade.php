@@ -30,13 +30,22 @@
                             <span>Vote Average:</span> <span class="vote-average">{{ $movie['vote_average'] ?? 'N/A' }}</span>
                         </div>
                     @endif
-                    <p class="overview">{{ $movie['overview'] }}</p>
+                    @if (isset($movie['overview']))
+                        <p class="overview">{{ $movie['overview'] }}</p>
+                    @endif
+                    <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie']) }}">
+    @csrf
+    <input type="hidden" name="type" value="movie">
+    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+</form>
                 </div>
             @endforeach
+            
         </div>
+        
     @else
         <p>No results found.</p>
     @endif
-</div>
 </body>
+
 </html>

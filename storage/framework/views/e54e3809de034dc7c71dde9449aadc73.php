@@ -32,14 +32,23 @@
                             <span>Vote Average:</span> <span class="vote-average"><?php echo e($movie['vote_average'] ?? 'N/A'); ?></span>
                         </div>
                     <?php endif; ?>
-                    <p class="overview"><?php echo e($movie['overview']); ?></p>
+                    <?php if(isset($movie['overview'])): ?>
+                        <p class="overview"><?php echo e($movie['overview']); ?></p>
+                    <?php endif; ?>
+                    <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
+    <?php echo csrf_field(); ?>
+    <input type="hidden" name="type" value="movie">
+    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+</form>
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
         </div>
+        
     <?php else: ?>
         <p>No results found.</p>
     <?php endif; ?>
-</div>
 </body>
+
 </html>
 <?php /**PATH C:\Users\user\PHP-Project\resources\views/search-results.blade.php ENDPATH**/ ?>

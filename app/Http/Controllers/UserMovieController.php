@@ -38,7 +38,6 @@ class UserMovieController extends Controller
         // Log in the user
         Auth::login($user);
 
-        // Add success message to the session
         Session::flash('success', 'User registered and logged in successfully.');
 
         return redirect()->route('login');
@@ -48,21 +47,7 @@ class UserMovieController extends Controller
     return view('login');
 }
  
-// public function login(Request $request)
-// {
-//     $credentials = $request->only('email', 'password');
-
-//     $user = MovieUser::where('email', $credentials['email'])->first();
-
-//     if ($user && Hash::check($credentials['password'], $user->password)) {
-//         // Authentication successful
-//         $request->session()->put('username', $user->username);
-//         $request->session()->put('user_id', $user->id);
-//         return redirect()->route('movies.index');
-//     }
-
-//     // Failed login attempt
-//     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+ 
 public function login(Request $request)
 {
     $credentials = $request->only('email', 'password');
@@ -73,7 +58,6 @@ public function login(Request $request)
         return redirect()->route('movies.index');
     }
 
-    // Failed login attempt
     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
 }
 // }
@@ -112,11 +96,10 @@ public function login(Request $request)
 
 public function profile()
 {
-    // Retrieve the user's information from the session or database
+
     $username = session('username');
     $user = MovieUser::with('favorites')->where('username', $username)->first();
 
-    // Check if the favorites relationship is loaded
     if (!$user->relationLoaded('favorites')) {
         $user->load('favorites');
     }
@@ -155,48 +138,7 @@ public function profile()
     ]);
 }
 
-// public function profile()
-// {
-//     // Retrieve the user's information from the session or database
-//     $username = session('username');
-//     $user = MovieUser::with('favorites')->where('username', $username)->first();
-
-//     // Check if the favorites relationship is loaded
-//     if (!$user->relationLoaded('favorites')) {
-//         $user->load('favorites');
-//     }
-
-//     // Retrieve the user's favorite movies
-//     $favorites = $user->favorites;
-
-//     $movies = [];
-//     $tvShows = [];
-
-//     foreach ($favorites as $favorite) {
-//         if ($favorite->type === 'movie') {
-//             $movieId = $favorite->movie_id;
-//             $movie = $this->getMovieDetails($movieId);
-
-//             if ($movie) {
-//                 $movies[] = $movie;
-//             }
-//         } elseif ($favorite->type === 'tv') {
-//             $tvShowId = $favorite->movie_id; // Assuming movie_id represents TV show ID
-//             $tvShow = $this->getTVShowDetails($tvShowId);
-
-//             if ($tvShow) {
-//                 $tvShows[] = $tvShow;
-//             }
-//         }
-//     }
-
-//     // Pass the user's information, movies, and TV shows to the view
-//     return view('profile', [
-//         'user' => $user,
-//         'movies' => $movies,
-//         'tvShows' => $tvShows,
-//     ]);
-// }
+ 
 
 private function getMovieDetails($id)
 {
@@ -229,7 +171,6 @@ private function getTVShowDetails($id)
 
         return $data;
     } catch (\Exception $e) {
-        // Handle API request errors
         return null;
     }
 }
@@ -242,7 +183,7 @@ public function logout(Request $request)
 
     $request->session()->regenerateToken();
 
-    return redirect('/');
+    return redirect('/register');
 }
 
 
