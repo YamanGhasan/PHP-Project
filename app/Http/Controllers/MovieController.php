@@ -118,25 +118,19 @@ public function fetchVideoData()
 {
     // Retrieve the movie ID from the API or any other source
     $movieId = '299536';
-
-    // Construct the URL for fetching video data
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
     $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
 
-    // Send a GET request to fetch video data
     $response = Http::get($videoEndpoint);
     $data = $response->json();
-
-    // Redirect to the video page and pass the data as a parameter
+ 
     return redirect()->route('videoPage', ['data' => json_encode($data)]);
 }
 
 public function showVideoPage(Request $request)
 {
     $videoData = json_decode($request->input('data'), true);
-    // Handle the video data and pass it to the view
-    // You can customize this part based on your requirements
-
+ 
     return view('video-page', ['videoData' => $videoData]);
 }
 
@@ -161,7 +155,6 @@ public function addToFavorites($id)
     $movie = $this->getMovieDetails($id);
 
     if ($movie) {
-        // Create a new favorite record
         $favorite = $user->favorites()->create([
             'movie_id' => $movie['id'],
             'title' => $movie['title'],
