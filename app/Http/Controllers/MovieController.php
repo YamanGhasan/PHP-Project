@@ -142,7 +142,6 @@ public function addToFavorites($id)
 {
     $user = auth()->user();
     if (!$user) {
-        // Handle case when user is not authenticated
         return redirect()->back()->with('error', 'User not authenticated.');
     }
 
@@ -181,21 +180,18 @@ public function addToFavoritesTvShow($id)
         return redirect()->back()->with('error', 'TV show is already in favorites.');
     }
 
-    // Retrieve the TV show details from the API
+   
     $tvShow = $this->getTvShowDetails($id);
 
     if ($tvShow) {
-        // Create a new favorite record
         $favorite = $user->favorites()->create([
             'movie_id'  => $tvShow['id'],
             'title' => $tvShow['name'],
             'poster_path' => $tvShow['poster_path'],
         ]);
 
-        // Redirect back to the TV show page with a success message
         return redirect()->back()->with('message', 'TV show added to favorites.');
     } else {
-        // Redirect back to the TV show page with an error message
         return redirect()->back()->with('error', 'Failed to retrieve TV show details.');
     }
 }
