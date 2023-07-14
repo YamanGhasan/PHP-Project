@@ -60,7 +60,6 @@ class MovieController extends Controller
     
             return view('search-results', compact('movies'));
         } catch (\Exception $e) {
-            // Handle any errors that occur during the request
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -85,7 +84,7 @@ class MovieController extends Controller
         $movie = $movieResponse->json();
         $contentRatings = $contentRatingsResponse->json();
         $recommendations = $recommendationsResponse->json();
-        // Pass the movie details to the view
+        
         return view('show', [
             'movie' => $movie,
             'contentRatings' => $contentRatings,
