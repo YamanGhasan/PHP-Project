@@ -116,7 +116,6 @@ class MovieController extends Controller
 
 public function fetchVideoData()
 {
-    // Retrieve the movie ID from the API or any other source
     $movieId = '299536';
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
     $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
@@ -160,10 +159,10 @@ public function addToFavorites($id)
             'poster_path' => $movie['poster_path'],
         ]);
 
-        // Redirect back to the movie page with a success message
+       
         return redirect()->back()->with('message', 'Movie added to favorites.');
     } else {
-        // Redirect back to the movie page with an error message
+       
         return redirect()->back()->with('error', 'Failed to retrieve movie details.');
     }
 }
