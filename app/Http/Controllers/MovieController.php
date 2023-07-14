@@ -11,7 +11,7 @@ use App\Models\Favorite;
 use App\Models\MovieUser;
 
 
- 
+  
  
 class MovieController extends Controller
 {
