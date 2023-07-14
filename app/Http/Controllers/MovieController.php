@@ -257,21 +257,6 @@ public function remove($id)
     }
 }
 
-// public function recommendations($id)
-// {
-//     $apiKey='22d966b39e45c68b73d1aaa2be9e9794';
-//     $client = new \GuzzleHttp\Client();
-//     $url="https://api.themoviedb.org/3/movie/{movie_id}/recommendations";
-//     try {
-//         $response = $client->get($url);
-//         $data = json_decode($response->getBody(), true);
-
-//         return $data;
-//     } catch (\Exception $e) {
-//         // Handle API request errors
-//         return null;
-//     }
-// }
-
+ 
 
 }
