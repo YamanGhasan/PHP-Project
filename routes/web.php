@@ -15,10 +15,6 @@ Route::get('/register', function () {
 });
 Route::post('/register', [UserMovieController::class, 'registeruser'])->name('register');
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a1eef285d50446e9cfc258fb87a3af7d84817e01
 Route::get('/login', [UserMovieController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [UserMovieController::class, 'login'])->name('login');
  
