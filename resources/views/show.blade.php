@@ -9,8 +9,8 @@
 <body>
     <div class="container">
         @if (isset($movie))
-            <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
             <div class="movie-info">
+            <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
                 <h2 class="movie-title">{{ $movie['title'] }}</h2>
                 <h4>{{ $movie['overview'] }}</h4>
 
@@ -50,26 +50,27 @@
                 @endif
 </div>      
   <!-- Movie recommendations section -->
-  <!-- <h2 class="">Recommendations</h2>  -->
+ 
                 @if (isset($recommendations) && count($recommendations) > 0)
+                <h1 id="title">Recommendations</h1>
+                    <div id="movies-grid">
                         @foreach ($recommendations as $recommendation)
-                        <div class="Recommendations">
+                        <div class="movie-card">
                                 <img src="https://image.tmdb.org/t/p/w500{{ $recommendation['poster_path'] }}" class="movie-poster" alt="{{ $recommendation['title'] }} Poster">
-                                <h3 class="movie-title"><a href="{{ route('movie.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['title'] }}</a></h3>
-                                <!-- <h3>{{ $recommendation['overview'] }}</h3> -->
+                                <h2 class="movie-title"><a href="{{ route('movie.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['title'] }}</a></h2>
                                 <p class="movie-details">{{ $recommendation['release_date'] }}</p>
-                                <p class="movie-details">{{ $recommendation['vote_average'] }}</p>
+                <span class="vote-average">{{ $recommendation['vote_average'] }}</span> <span>⭐</span>
 </div>
                         @endforeach
                     </div>
                 @endif  
- 
+</div>
 </div>
 
 <div class="container">
         @elseif (isset($tvShow))
-            <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" alt="{{ $tvShow['name'] }} Poster">
             <div class="movie-info">
+            <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" alt="{{ $tvShow['name'] }} Poster">
             <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $tvShow['id']]) }}">{{ $tvShow['name'] }}</a></h2>
                 <h4>{{ $tvShow['overview'] }}</h4>
 
@@ -110,17 +111,19 @@
 </div>
 <!-- TV show recommendations section -->
 @if (isset($recommendationsTV) && count($recommendationsTV) > 0)
-    <h2>TV Show Recommendations</h2>
+    <!-- <h2>TV Show Recommendations</h2> -->
+    <h1 id="title">Recommendations</h1>
+    <div id="movies-grid">
         @foreach ($recommendationsTV as $recommendation)
-        <div class="Recommendations">
+        <div class="movie-card">
                 <img src="https://image.tmdb.org/t/p/w500{{ $recommendation['poster_path'] }}" class="movie-poster" alt="{{ $recommendation['name'] }} Poster">
                 <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['name'] }}</a></h2>
                 <p class="movie-details">{{ $recommendation['first_air_date'] }}</p>
-                <p class="movie-details">{{ $recommendation['vote_average'] }}</p>
+                <span class="vote-average">{{ $recommendation['vote_average'] }}</span> <span>⭐</span>
             </div>
         @endforeach
 @endif
-
+</div>
             </div>
         @endif
     </div>

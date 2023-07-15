@@ -67,17 +67,15 @@ body {
 }
 .container {
     display: flex;
-    justify-content: center;
-    align-items: center;
- 
 background-color: #121212;
-margin: 30px;
+margin: 3px;
 box-shadow: 0 0 10px rgba(175, 169, 169, 0.2);
 border-radius: 20px;
 
 }
+ 
 .container .movie-title a{
-    color: #121212;
+    color: #f1f1f1;
 }
 .poster  {
     height: 80vh;

@@ -9,8 +9,8 @@
 <body>
     <div class="container">
         <?php if(isset($movie)): ?>
-            <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" alt="<?php echo e($movie['title']); ?> Poster">
             <div class="movie-info">
+            <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" alt="<?php echo e($movie['title']); ?> Poster">
                 <h2 class="movie-title"><?php echo e($movie['title']); ?></h2>
                 <h4><?php echo e($movie['overview']); ?></h4>
 
@@ -50,26 +50,27 @@
                 <?php endif; ?>
 </div>      
   <!-- Movie recommendations section -->
-  <!-- <h2 class="">Recommendations</h2>  -->
+ 
                 <?php if(isset($recommendations) && count($recommendations) > 0): ?>
+                <h1 id="title">Recommendations</h1>
+                    <div id="movies-grid">
                         <?php $__currentLoopData = $recommendations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $recommendation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="Recommendations">
+                        <div class="movie-card">
                                 <img src="https://image.tmdb.org/t/p/w500<?php echo e($recommendation['poster_path']); ?>" class="movie-poster" alt="<?php echo e($recommendation['title']); ?> Poster">
-                                <h3 class="movie-title"><a href="<?php echo e(route('movie.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['title']); ?></a></h3>
-                                <!-- <h3><?php echo e($recommendation['overview']); ?></h3> -->
+                                <h2 class="movie-title"><a href="<?php echo e(route('movie.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['title']); ?></a></h2>
                                 <p class="movie-details"><?php echo e($recommendation['release_date']); ?></p>
-                                <p class="movie-details"><?php echo e($recommendation['vote_average']); ?></p>
+                <span class="vote-average"><?php echo e($recommendation['vote_average']); ?></span> <span>⭐</span>
 </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 <?php endif; ?>  
- 
+</div>
 </div>
 
 <div class="container">
         <?php elseif(isset($tvShow)): ?>
-            <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($tvShow['poster_path']); ?>" alt="<?php echo e($tvShow['name']); ?> Poster">
             <div class="movie-info">
+            <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($tvShow['poster_path']); ?>" alt="<?php echo e($tvShow['name']); ?> Poster">
             <h2 class="movie-title"><a href="<?php echo e(route('tvshow.show', ['id' => $tvShow['id']])); ?>"><?php echo e($tvShow['name']); ?></a></h2>
                 <h4><?php echo e($tvShow['overview']); ?></h4>
 
@@ -110,17 +111,19 @@
 </div>
 <!-- TV show recommendations section -->
 <?php if(isset($recommendationsTV) && count($recommendationsTV) > 0): ?>
-    <h2>TV Show Recommendations</h2>
+    <!-- <h2>TV Show Recommendations</h2> -->
+    <h1 id="title">Recommendations</h1>
+    <div id="movies-grid">
         <?php $__currentLoopData = $recommendationsTV; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $recommendation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="Recommendations">
+        <div class="movie-card">
                 <img src="https://image.tmdb.org/t/p/w500<?php echo e($recommendation['poster_path']); ?>" class="movie-poster" alt="<?php echo e($recommendation['name']); ?> Poster">
                 <h2 class="movie-title"><a href="<?php echo e(route('tvshow.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['name']); ?></a></h2>
                 <p class="movie-details"><?php echo e($recommendation['first_air_date']); ?></p>
-                <p class="movie-details"><?php echo e($recommendation['vote_average']); ?></p>
+                <span class="vote-average"><?php echo e($recommendation['vote_average']); ?></span> <span>⭐</span>
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php endif; ?>
-
+</div>
             </div>
         <?php endif; ?>
     </div>

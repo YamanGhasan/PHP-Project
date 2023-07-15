@@ -150,7 +150,7 @@ public function addToFavorites($id)
     $user = auth()->user();
     if (!$user) {
         // Handle case when user is not authenticated
-        return redirect()->back()->with('error', 'User not authenticated.');
+        return redirect()->route('login');
     }
 
     // Check if the movie is already in the user's favorites
@@ -181,7 +181,7 @@ public function addToFavoritesTvShow($id)
     $user = auth()->user();
     if (!$user) {
         // Handle case when user is not authenticated
-        return redirect()->back()->with('error', 'User not authenticated.');
+        return redirect()->route('login');
     }
 
     // Check if the TV show is already in the user's favorites

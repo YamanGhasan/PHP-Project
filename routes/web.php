@@ -15,9 +15,6 @@ Route::get('/register', function () {
 });
 Route::post('/register', [UserMovieController::class, 'registeruser'])->name('register');
 
-// Route::get('/login', function () {
-//     return view('login');
-// })->name('login');
 
 Route::get('/login', [UserMovieController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [UserMovieController::class, 'login'])->name('login');
@@ -34,8 +31,8 @@ Route::get('/profile', [UserMovieController::class, 'profile'])->name('profile')
 
 Route::get('/logout', [UserMovieController::class, 'logout'])->name('profile.logout');
  
-Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])->name('movies.favorite');
-Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite');
+Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])->name('movies.favorite')->middleware('auth');
+Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite')->middleware('auth');
 
 Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
 
