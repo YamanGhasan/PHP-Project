@@ -7,28 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Profile👤</title>
 <style>
-    .top-right {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
 
-    .logout-btn {
-        margin-left: 10px;
-    }
-    .movie-details {
-        font-size: 16px;
-        color: #333;
-    }
-    .add-favorite-btn{
-    font-family:  Arial, Helvetica, sans-serif;
-    color: black;
-    text-decoration: none;
-    background-color: #f4c518;
-    font-size: 20px;
-    margin: 10px;
-    border-radius: 4px;
-  }
  
 </style>
 </head>
