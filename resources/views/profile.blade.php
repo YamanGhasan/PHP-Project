@@ -54,15 +54,12 @@
 <h1>User Name:  <span>{{ $user->username }} </span> </h1>
 <h1>Age:  <span>{{ $user->age }}</span> </h1>
  
-  <h1 class="myfavh1">My Favorites</h1>
-  
-
-
-<div class="favorite-section">
+  <h1 class="myfavh1">My Favorites</h>
+<div id="movies-grid">
     @foreach ($movies as $movie)
-        <div class="favorite-movie">
-            <h3>{{ $movie['title'] }}</h3>
+        <div class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" class="movie-poster" alt="{{ $movie['title'] }} poster">
+            <h6 class="movie-title">{{ $movie['title'] }}</h6>
             <p class="movie-details">{{ $movie['overview'] }}</p>
             <p class="movie-details">Release Date: {{ $movie['release_date'] }}</p>
             <form action="{{ route('remove_favorite', ['id' => $movie['id']]) }}" method="POST">
@@ -77,9 +74,9 @@
 
  
     @foreach ($tvShows as $tvShow)
-        <div class="favorite-movie">
-            <h3>{{ $tvShow['name'] }}</h3>
+        <div class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['name'] }} poster">
+            <h6 class="movie-title">{{ $tvShow['name'] }}</h6>
             <p class="movie-details">{{ $tvShow['overview'] }}</p>
             <p class="movie-details">First Air Date: {{ $tvShow['first_air_date'] }}</p>
             <form action="{{ route('remove_favorite', ['id' => $tvShow['id']]) }}" method="POST">

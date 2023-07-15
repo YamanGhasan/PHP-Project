@@ -54,15 +54,12 @@
 <h1>User Name:  <span><?php echo e($user->username); ?> </span> </h1>
 <h1>Age:  <span><?php echo e($user->age); ?></span> </h1>
  
-  <h1 class="myfavh1">My Favorites</h1>
-  
-
-
-<div class="favorite-section">
+  <h1 class="myfavh1">My Favorites</h>
+<div id="movies-grid">
     <?php $__currentLoopData = $movies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $movie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="favorite-movie">
-            <h3><?php echo e($movie['title']); ?></h3>
+        <div class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" class="movie-poster" alt="<?php echo e($movie['title']); ?> poster">
+            <h6 class="movie-title"><?php echo e($movie['title']); ?></h6>
             <p class="movie-details"><?php echo e($movie['overview']); ?></p>
             <p class="movie-details">Release Date: <?php echo e($movie['release_date']); ?></p>
             <form action="<?php echo e(route('remove_favorite', ['id' => $movie['id']])); ?>" method="POST">
@@ -77,9 +74,9 @@
 
  
     <?php $__currentLoopData = $tvShows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tvShow): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="favorite-movie">
-            <h3><?php echo e($tvShow['name']); ?></h3>
+        <div class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500<?php echo e($tvShow['poster_path']); ?>" class="movie-poster" alt="<?php echo e($tvShow['name']); ?> poster">
+            <h6 class="movie-title"><?php echo e($tvShow['name']); ?></h6>
             <p class="movie-details"><?php echo e($tvShow['overview']); ?></p>
             <p class="movie-details">First Air Date: <?php echo e($tvShow['first_air_date']); ?></p>
             <form action="<?php echo e(route('remove_favorite', ['id' => $tvShow['id']])); ?>" method="POST">
