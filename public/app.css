@@ -105,7 +105,6 @@ border-radius: 20px;
     text-decoration: none;
     background-color: #f4c518;
     font-size: 30px;
-    /* margin-top: 10px; */
     border-radius: 4px;
   }
 .movie-info {
@@ -145,7 +144,6 @@ border-radius: 20px;
 }
 
 .containerContent h2 {
-    /* Add your styles for the h2 element within containerContent */
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -162,7 +160,6 @@ border-radius: 20px;
 }
  
 .descriptor {
-    /* Add your styles for descriptors */
     display: inline-block;
     background-color: #f1f1f1;
     padding: 4px 8px;
@@ -202,7 +199,7 @@ border-radius: 20px;
     height: 100%;
     background-image: url('/images/thisisWar.jpg');
     background-size: cover;
-    filter: blur(3px); /* Adjust the blur value as needed */
+    filter: blur(3px);
     z-index: -1;
 }
 .username {
@@ -236,9 +233,6 @@ border-radius: 20px;
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(195, 255, 0, 0.2);
-    /* max-width: 500px; */
-    /* width: 100%; */
-    /* margin: auto; */
     text-align: center;
     font-family: arial;
     background-color: #f1f1f1;
@@ -255,9 +249,7 @@ border-radius: 20px;
   .card span{
     color: #f4c518;
   }
- /* .myfavh1{
-    background-color: #F4C520;
- } */
+ 
  .favorite-movie {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
@@ -266,7 +258,6 @@ border-radius: 20px;
     text-align: center;
     background-color: #f1f1f1;
     border-radius: 10px;
-    /* background-color : gray; */
 }
 .favorite-section {
     display: flex;
@@ -282,7 +273,6 @@ border-radius: 20px;
     text-align: center;
     background-color: #f1f1f1;
     border-radius: 10px;
-    /* background-color : gray; */
 }
 .container{
     display: flex;
