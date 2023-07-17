@@ -7,7 +7,11 @@
     <title>Movie Details</title>
 </head>
 <body>
+    
     <div class="container">
+    <div class="top-right">
+      <a href="<?php echo e(route('movies.index')); ?>" class="btns" >Go to homepage</a>
+  </div>
         <?php if(isset($movie)): ?>
             <div class="movie-info">
             <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" alt="<?php echo e($movie['title']); ?> Poster">

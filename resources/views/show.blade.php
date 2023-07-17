@@ -7,7 +7,11 @@
     <title>Movie Details</title>
 </head>
 <body>
+    
     <div class="container">
+    <div class="top-right">
+      <a href="{{ route('movies.index') }}" class="btns" >Go to homepage</a>
+  </div>
         @if (isset($movie))
             <div class="movie-info">
             <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
