@@ -60,39 +60,7 @@ public function login(Request $request)
 
     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
 }
-// }
-//  // working 
-// public function profile()
-// {
-//     // Retrieve the user's information from the session or database
-//     $username = session('username');
-//     $user = MovieUser::with('favorites')->where('username', $username)->first();
-
-//     // Check if the favorites relationship is loaded
-//     if (!$user->relationLoaded('favorites')) {
-//         $user->load('favorites');
-//     }
-
-//     // Retrieve the user's favorite movies
-//     $favorites = $user->favorites;
-
-//     $movies = [];
-
-//     foreach ($favorites as $favorite) {
-//         $movieId = $favorite->movie_id;
-//         $movie = $this->getMovieDetails($movieId);
-
-//         if ($movie) {
-//             $movies[] = $movie;
-//         }
-//     }
-
-//     // Pass the user's information and favorites to the view
-//     return view('profile', [
-//         'user' => $user,
-//         'movies' => $movies,
-//     ]);
-// }
+ 
 
 public function profile()
 {
