@@ -48,6 +48,11 @@
                 <?php else: ?>
                     <p class="no-descriptors">No content descriptors available.</p>
                 <?php endif; ?>
+                <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
+    <?php echo csrf_field(); ?>
+    <input type="hidden" name="type" value="movie">
+    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+</form>
 </div>      
   <!-- Movie recommendations section -->
  
@@ -108,10 +113,15 @@
 <?php else: ?>
     <p class="no-descriptors">No content descriptors available.</p>
 <?php endif; ?>
+                    <!-- Add to Favorite button -->
+                    <form method="POST" action="<?php echo e(route('tvshows.favorite', ['id' => $tvShow['id'], 'type' => 'tv'])); ?>">
+    <?php echo csrf_field(); ?>
+    <input type="hidden" name="type" value="tv">
+    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+</form>
 </div>
 <!-- TV show recommendations section -->
 <?php if(isset($recommendationsTV) && count($recommendationsTV) > 0): ?>
-    <!-- <h2>TV Show Recommendations</h2> -->
     <h1 id="title">Recommendations</h1>
     <div id="movies-grid">
         <?php $__currentLoopData = $recommendationsTV; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $recommendation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
