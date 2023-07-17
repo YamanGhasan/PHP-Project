@@ -17,7 +17,7 @@ body {
 .movie-card{
     background: #1a1a1a;
     border-radius: 10px;
-
+height:fit-content;
 }
 .movie-card h1{
     padding-left: 10px;
