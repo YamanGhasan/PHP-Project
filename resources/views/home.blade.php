@@ -31,8 +31,6 @@
     </form>
 </section>
  
- 
-    <!-- <section id="tv-shows-section" class="hidden"> -->
     @if ($TvShows && count($TvShows) > 0)
         <h1 id="title">Popular TV Shows</h1>
         <div id="movies-grid">

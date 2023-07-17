@@ -111,7 +111,6 @@
 </div>
 <!-- TV show recommendations section -->
 @if (isset($recommendationsTV) && count($recommendationsTV) > 0)
-    <!-- <h2>TV Show Recommendations</h2> -->
     <h1 id="title">Recommendations</h1>
     <div id="movies-grid">
         @foreach ($recommendationsTV as $recommendation)
