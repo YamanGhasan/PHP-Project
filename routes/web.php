@@ -33,7 +33,7 @@ Route::get('/logout', [UserMovieController::class, 'logout'])->name('profile.log
 Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])->name('movies.favorite')->middleware('auth');
 Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite')->middleware('auth');
 
-Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
+// Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
 
 
 
