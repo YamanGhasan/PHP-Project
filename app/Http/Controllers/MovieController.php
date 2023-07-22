@@ -281,7 +281,7 @@ public function remove($id)
 public function getPopularPeople()
 {
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-    // $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
+    $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
     $client = new \GuzzleHttp\Client();
 
     $url = "https://api.themoviedb.org/3/person/popular?api_key={$apiKey}";
