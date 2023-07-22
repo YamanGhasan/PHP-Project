@@ -291,7 +291,6 @@ public function getPopularPeople()
 
         return $data;
     } catch (\Exception $e) {
-        // Handle API request errors
         return null;
     }
 }
