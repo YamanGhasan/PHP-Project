@@ -315,4 +315,53 @@ border-radius: 20px;
     color: #333;
 }
  
- 
+.profile-slideshow {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    max-width: 200px;
+    max-height: 300px;
+}
+
+.profile-slideshow img {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 0;
+    animation: fadeInOut 8s infinite;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+.popularPeopleSection {
+    display: flex;
+    flex-wrap: wrap;
+    color: #f1f1f1;
+    background-color: #121212; 
+}
+
+.actor-container {
+    flex: 0 0 calc(33.33% - 70px);
+    margin: 10px;
+    border: 1px solid #151414;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+.circular-image {
+    border-radius: 50%;
+    width: 200px;  
+    height: 200px;  
+}

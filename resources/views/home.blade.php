@@ -31,32 +31,42 @@
     </form>
 </section>
 <h1>Popular People</h1>
+@if(!is_null($popularPeople))
+    @if(count($popularPeople['results']) > 0)
+        <div class="popularPeopleSection">
+            @foreach($popularPeople['results'] as $person)
+                <div class="actor-container">
+                    <h2>{{ $person['name'] }}</h2>
+                    <p>Known For: {{ $person['known_for_department'] }}</p>
+                    <p>Popularity: {{ $person['popularity'] }}</p>
+                    <div class="profile-slideshow">
+                        <img src="https://image.tmdb.org/t/p/w200{{ $person['profile_path'] }}" alt="{{ $person['name'] }}" class="circular-image">
+                    </div>
 
-@if(isset($popularPeople['results']))
-    <ul>
-        @foreach($popularPeople['results'] as $person)
-            <li>
-                <h2>{{ $person['name'] }}</h2>
-                <p>Known For: {{ $person['known_for_department'] }}</p>
-                <p>Popularity: {{ $person['popularity'] }}</p>
-                <img src="https://image.tmdb.org/t/p/w200{{ $person['profile_path'] }}" alt="{{ $person['name'] }}">
-
-                <h3>Known For (Movies):</h3>
-                <ul>
-                    @foreach($person['known_for'] as $knownForMovie)
-                        <li>
-                            <h4>{{ $knownForMovie['title'] }}</h4>
-                            <p>{{ $knownForMovie['overview'] }}</p>
-                            <p>Release Date: {{ $knownForMovie['release_date'] }}</p>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-        @endforeach
-    </ul>
+                    <h3>Known For (Movies):</h3>
+                    <ul>
+                        @foreach($person['known_for'] as $knownForMovie)
+                            <li>
+                                @if(isset($knownForMovie['title']))
+                                    <h4>{{ $knownForMovie['title'] }}</h4>
+                                @else
+                                    <h4>Unknown Title</h4>
+                                @endif
+                                <!-- <p>{{ $knownForMovie['overview'] ?? 'Overview not available' }}</p> -->
+                                <!-- <p>Release Date: {{ $knownForMovie['release_date'] ?? 'Release date not available' }}</p> -->
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p>No popular people available.</p>
+    @endif
 @else
-    <p>No data available.</p>
+    <p>Failed to fetch popular people data from TMDb API.</p>
 @endif
+</div>
     @if ($TvShows && count($TvShows) > 0)
         <h1 id="title">Popular TV Shows</h1>
         <div id="movies-grid">

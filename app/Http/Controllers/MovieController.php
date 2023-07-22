@@ -17,27 +17,28 @@ class MovieController extends Controller
 {
  
     public function index()
-{
-    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-    $client = new Client();
-
-    $movieUrl = "https://api.themoviedb.org/3/movie/popular?api_key={$apiKey}";
-    $tvShowUrl = "https://api.themoviedb.org/3/tv/popular?api_key={$apiKey}";
-
-    try {
+    {
+        $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+        $client = new Client();
+    
+        // Fetch popular movies data
+        $movieUrl = "https://api.themoviedb.org/3/movie/popular?api_key={$apiKey}";
         $movieResponse = $client->get($movieUrl);
         $movieData = json_decode($movieResponse->getBody(), true);
         $movies = $movieData['results'] ?? null;
-
+    
+        // Fetch popular TV shows data
+        $tvShowUrl = "https://api.themoviedb.org/3/tv/popular?api_key={$apiKey}";
         $tvShowResponse = $client->get($tvShowUrl);
         $tvShowData = json_decode($tvShowResponse->getBody(), true);
         $TvShows = $tvShowData['results'] ?? null;
-
-        return view('home', compact('movies', 'TvShows'));
-    } catch (\Exception $e) {
-        return $e->getMessage();
+    
+        // Fetch popular people data
+        $popularPeople = $this->getPopularPeople();
+    
+        // Pass data to the view
+        return view('home', compact('movies', 'TvShows', 'popularPeople'));
     }
-}
 
     
     
@@ -257,25 +258,41 @@ public function remove($id)
     }
 }
 
+// public function getPopularPeople()
+// {
+//     $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
+//     $url = "https://api.themoviedb.org/3/person/popular?api_key={$apiKey}";
+//     // $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+//     $client = new \GuzzleHttp\Client();
+//     $response = $client->get($url);
+
+//     if ($response->getStatusCode() == 200) {
+//         $data = json_decode($response->getBody(), true);
+//         // $data will now contain the response from the API in array format
+
+//         // Return the view with the data
+//         return view('popular_people', ['popularPeople' => $data['results']]);
+//     } else {
+//         // Handle error if the API request was not successful
+//         return response()->json(['error' => 'Failed to fetch data from TMDb API'], 500);
+//     }
+// }
+ 
 public function getPopularPeople()
 {
-    $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
+    $client = new \GuzzleHttp\Client();
+
     $url = "https://api.themoviedb.org/3/person/popular?api_key={$apiKey}";
 
-    $client = new Client();
-    $response = $client->get($url);
-
-    if ($response->getStatusCode() == 200) {
+    try {
+        $response = $client->get($url);
         $data = json_decode($response->getBody(), true);
-        // $data will now contain the response from the API in array format
 
-        // Return the view with the data
-        return view('popular_people', ['popularPeople' => $data['results']]);
-    } else {
-        // Handle error if the API request was not successful
-        return response()->json(['error' => 'Failed to fetch data from TMDb API'], 500);
+        return $data;
+    } catch (\Exception $e) {
+        // Handle API request errors
+        return null;
     }
 }
- 
-
 }
