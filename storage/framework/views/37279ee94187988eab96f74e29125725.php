@@ -30,7 +30,33 @@
         <button type="submit" class="watch-video-button">Watch Video!</button>
     </form>
 </section>
- 
+<h1>Popular People</h1>
+
+<?php if(isset($popularPeople['results'])): ?>
+    <ul>
+        <?php $__currentLoopData = $popularPeople['results']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $person): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <li>
+                <h2><?php echo e($person['name']); ?></h2>
+                <p>Known For: <?php echo e($person['known_for_department']); ?></p>
+                <p>Popularity: <?php echo e($person['popularity']); ?></p>
+                <img src="https://image.tmdb.org/t/p/w200<?php echo e($person['profile_path']); ?>" alt="<?php echo e($person['name']); ?>">
+
+                <h3>Known For (Movies):</h3>
+                <ul>
+                    <?php $__currentLoopData = $person['known_for']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $knownForMovie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li>
+                            <h4><?php echo e($knownForMovie['title']); ?></h4>
+                            <p><?php echo e($knownForMovie['overview']); ?></p>
+                            <p>Release Date: <?php echo e($knownForMovie['release_date']); ?></p>
+                        </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </li>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </ul>
+<?php else: ?>
+    <p>No data available.</p>
+<?php endif; ?>
     <?php if($TvShows && count($TvShows) > 0): ?>
         <h1 id="title">Popular TV Shows</h1>
         <div id="movies-grid">

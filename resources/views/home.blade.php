@@ -30,7 +30,33 @@
         <button type="submit" class="watch-video-button">Watch Video!</button>
     </form>
 </section>
- 
+<h1>Popular People</h1>
+
+@if(isset($popularPeople['results']))
+    <ul>
+        @foreach($popularPeople['results'] as $person)
+            <li>
+                <h2>{{ $person['name'] }}</h2>
+                <p>Known For: {{ $person['known_for_department'] }}</p>
+                <p>Popularity: {{ $person['popularity'] }}</p>
+                <img src="https://image.tmdb.org/t/p/w200{{ $person['profile_path'] }}" alt="{{ $person['name'] }}">
+
+                <h3>Known For (Movies):</h3>
+                <ul>
+                    @foreach($person['known_for'] as $knownForMovie)
+                        <li>
+                            <h4>{{ $knownForMovie['title'] }}</h4>
+                            <p>{{ $knownForMovie['overview'] }}</p>
+                            <p>Release Date: {{ $knownForMovie['release_date'] }}</p>
+                        </li>
+                    @endforeach
+                </ul>
+            </li>
+        @endforeach
+    </ul>
+@else
+    <p>No data available.</p>
+@endif
     @if ($TvShows && count($TvShows) > 0)
         <h1 id="title">Popular TV Shows</h1>
         <div id="movies-grid">

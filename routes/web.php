@@ -10,6 +10,8 @@ Route::get('/', function () {
 });
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 
+Route::get('/', [MovieController::class, 'getPopularPeople']);
+
 Route::get('/register', function () {
     return view('register');
 });
@@ -34,6 +36,8 @@ Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])
 Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite')->middleware('auth');
 
 Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
+
+
 
 
 
