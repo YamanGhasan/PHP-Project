@@ -30,42 +30,48 @@
         <button type="submit" class="watch-video-button">Watch Video!</button>
     </form>
 </section>
-<h1>Popular People</h1>
-<?php if(!is_null($popularPeople)): ?>
-    <?php if(count($popularPeople['results']) > 0): ?>
-        <div class="popularPeopleSection">
-            <?php $__currentLoopData = $popularPeople['results']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $person): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="actor-container">
-                    <h2><?php echo e($person['name']); ?></h2>
-                    <p>Known For: <?php echo e($person['known_for_department']); ?></p>
-                    <p>Popularity: <?php echo e($person['popularity']); ?></p>
-                    <div class="profile-slideshow">
-                        <img src="https://image.tmdb.org/t/p/w200<?php echo e($person['profile_path']); ?>" alt="<?php echo e($person['name']); ?>" class="circular-image">
-                    </div>
+<h1 id="title">Popular People</h1>
+<?php if(!is_null($popularPeople) && count($popularPeople['results']) > 0): ?>
+    <div class="popularPeopleSection">
+        <?php
+            $count = 0;
+        ?>
+        <?php $__currentLoopData = $popularPeople['results']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $person): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
+                $count++;
+            ?>
+            <?php if($count > 10): ?>
+                <?php break; ?>
+            <?php endif; ?>
 
-                    <h3>Known For (Movies):</h3>
-                    <ul>
-                        <?php $__currentLoopData = $person['known_for']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $knownForMovie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li>
-                                <?php if(isset($knownForMovie['title'])): ?>
-                                    <h4><?php echo e($knownForMovie['title']); ?></h4>
-                                <?php else: ?>
-                                    <h4>Unknown Title</h4>
-                                <?php endif; ?>
-                                <!-- <p><?php echo e($knownForMovie['overview'] ?? 'Overview not available'); ?></p> -->
-                                <!-- <p>Release Date: <?php echo e($knownForMovie['release_date'] ?? 'Release date not available'); ?></p> -->
-                            </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </ul>
+            <div class="actor-container">
+                <h2><?php echo e($person['name']); ?></h2>
+                <p>Known For: <?php echo e($person['known_for_department']); ?></p>
+                <p>Popularity: <?php echo e($person['popularity']); ?></p>
+                <div class="profile-slideshow">
+                    <img src="https://image.tmdb.org/t/p/w200<?php echo e($person['profile_path']); ?>" alt="<?php echo e($person['name']); ?>" class="circular-image">
                 </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
-    <?php else: ?>
-        <p>No popular people available.</p>
-    <?php endif; ?>
+
+                <h3>Known For (Movies):</h3>
+                <ul>
+                    <?php $__currentLoopData = $person['known_for']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $knownForMovie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if(isset($knownForMovie['title'])): ?>
+                            <h4><?php echo e($knownForMovie['title']); ?></h4>
+                        <?php else: ?>
+                            <h4>Unknown Title</h4>
+                        <?php endif; ?>
+                        <!-- <p><?php echo e($knownForMovie['overview'] ?? 'Overview not available'); ?></p> -->
+                        <!-- <p>Release Date: <?php echo e($knownForMovie['release_date'] ?? 'Release date not available'); ?></p> -->
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </div>
 <?php else: ?>
-    <p>Failed to fetch popular people data from TMDb API.</p>
+    <p>No popular people found.</p>
 <?php endif; ?>
+
+<!--   -->
 </div>
     <?php if($TvShows && count($TvShows) > 0): ?>
         <h1 id="title">Popular TV Shows</h1>

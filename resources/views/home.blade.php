@@ -30,42 +30,48 @@
         <button type="submit" class="watch-video-button">Watch Video!</button>
     </form>
 </section>
-<h1>Popular People</h1>
-@if(!is_null($popularPeople))
-    @if(count($popularPeople['results']) > 0)
-        <div class="popularPeopleSection">
-            @foreach($popularPeople['results'] as $person)
-                <div class="actor-container">
-                    <h2>{{ $person['name'] }}</h2>
-                    <p>Known For: {{ $person['known_for_department'] }}</p>
-                    <p>Popularity: {{ $person['popularity'] }}</p>
-                    <div class="profile-slideshow">
-                        <img src="https://image.tmdb.org/t/p/w200{{ $person['profile_path'] }}" alt="{{ $person['name'] }}" class="circular-image">
-                    </div>
+<h1 id="title">Popular People</h1>
+@if (!is_null($popularPeople) && count($popularPeople['results']) > 0)
+    <div class="popularPeopleSection">
+        @php
+            $count = 0;
+        @endphp
+        @foreach ($popularPeople['results'] as $person)
+            @php
+                $count++;
+            @endphp
+            @if ($count > 10)
+                @break
+            @endif
 
-                    <h3>Known For (Movies):</h3>
-                    <ul>
-                        @foreach($person['known_for'] as $knownForMovie)
-                            <li>
-                                @if(isset($knownForMovie['title']))
-                                    <h4>{{ $knownForMovie['title'] }}</h4>
-                                @else
-                                    <h4>Unknown Title</h4>
-                                @endif
-                                <!-- <p>{{ $knownForMovie['overview'] ?? 'Overview not available' }}</p> -->
-                                <!-- <p>Release Date: {{ $knownForMovie['release_date'] ?? 'Release date not available' }}</p> -->
-                            </li>
-                        @endforeach
-                    </ul>
+            <div class="actor-container">
+                <h2>{{ $person['name'] }}</h2>
+                <p>Known For: {{ $person['known_for_department'] }}</p>
+                <p>Popularity: {{ $person['popularity'] }}</p>
+                <div class="profile-slideshow">
+                    <img src="https://image.tmdb.org/t/p/w200{{ $person['profile_path'] }}" alt="{{ $person['name'] }}" class="circular-image">
                 </div>
-            @endforeach
-        </div>
-    @else
-        <p>No popular people available.</p>
-    @endif
+
+                <h3>Known For (Movies):</h3>
+                <ul>
+                    @foreach ($person['known_for'] as $knownForMovie)
+                        @if (isset($knownForMovie['title']))
+                            <h4>{{ $knownForMovie['title'] }}</h4>
+                        @else
+                            <h4>Unknown Title</h4>
+                        @endif
+                        <!-- <p>{{ $knownForMovie['overview'] ?? 'Overview not available' }}</p> -->
+                        <!-- <p>Release Date: {{ $knownForMovie['release_date'] ?? 'Release date not available' }}</p> -->
+                    @endforeach
+                </ul>
+            </div>
+        @endforeach
+    </div>
 @else
-    <p>Failed to fetch popular people data from TMDb API.</p>
+    <p>No popular people found.</p>
 @endif
+
+<!--   -->
 </div>
     @if ($TvShows && count($TvShows) > 0)
         <h1 id="title">Popular TV Shows</h1>
