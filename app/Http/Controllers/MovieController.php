@@ -233,7 +233,6 @@ private function getMovieDetails($id)
 
         return $data;
     } catch (\Exception $e) {
-        // Handle API request errors
         return null;
     }
 }
