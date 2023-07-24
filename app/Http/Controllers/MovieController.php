@@ -258,30 +258,12 @@ public function remove($id)
     }
 }
 
-// public function getPopularPeople()
-// {
-//     $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
-//     $url = "https://api.themoviedb.org/3/person/popular?api_key={$apiKey}";
-//     // $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-//     $client = new \GuzzleHttp\Client();
-//     $response = $client->get($url);
-
-//     if ($response->getStatusCode() == 200) {
-//         $data = json_decode($response->getBody(), true);
-//         // $data will now contain the response from the API in array format
-
-//         // Return the view with the data
-//         return view('popular_people', ['popularPeople' => $data['results']]);
-//     } else {
-//         // Handle error if the API request was not successful
-//         return response()->json(['error' => 'Failed to fetch data from TMDb API'], 500);
-//     }
-// }
+ 
  
 public function getPopularPeople()
 {
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';
-    $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
+    // $apiKey = config('app.tmdb_api_key'); // Access the API key from the .env file
     $client = new \GuzzleHttp\Client();
 
     $url = "https://api.themoviedb.org/3/person/popular?api_key={$apiKey}";
