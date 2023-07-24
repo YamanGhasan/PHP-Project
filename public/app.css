@@ -350,7 +350,7 @@ border-radius: 20px;
     display: flex;
     flex-wrap: wrap;
     color: #f1f1f1;
-    background-color: #121212;     margin: 20px;   padding: 100px;
+    background-color: #121212;     margin: 20px;   padding:0px 0px 0px 100px;
 }
 
 .actor-container {
