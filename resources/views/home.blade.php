@@ -137,9 +137,9 @@
                 </div>
             @endforeach
         </div>
-    <!-- @else -->
-        <!-- <p>No movies found.</p> -->
-    <!-- @endif -->
+    @else
+        <p>No movies found.</p>
+    @endif
    
     
     
