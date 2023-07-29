@@ -66,7 +66,7 @@
                         <?php $__currentLoopData = $recommendations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $recommendation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="movie-card">
                                 <img src="https://image.tmdb.org/t/p/w500<?php echo e($recommendation['poster_path']); ?>" class="movie-poster" alt="<?php echo e($recommendation['title']); ?> Poster">
-                                <h2 class="movie-title"><a href="<?php echo e(route('movie.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['title']); ?></a></h2>
+                                <h2 class="recommendationsTitle"><a href="<?php echo e(route('movie.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['title']); ?></a></h2>
                                 <p class="movie-details"><?php echo e($recommendation['release_date']); ?></p>
                 <span class="vote-average"><?php echo e($recommendation['vote_average']); ?></span> <span>⭐</span>
 </div>
@@ -131,7 +131,7 @@
         <?php $__currentLoopData = $recommendationsTV; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $recommendation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="movie-card">
                 <img src="https://image.tmdb.org/t/p/w500<?php echo e($recommendation['poster_path']); ?>" class="movie-poster" alt="<?php echo e($recommendation['name']); ?> Poster">
-                <h2 class="movie-title"><a href="<?php echo e(route('tvshow.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['name']); ?></a></h2>
+                <h2 class="recommendationsTitle"><a href="<?php echo e(route('tvshow.show', ['id' => $recommendation['id']])); ?>"><?php echo e($recommendation['name']); ?></a></h2>
                 <p class="movie-details"><?php echo e($recommendation['first_air_date']); ?></p>
                 <span class="vote-average"><?php echo e($recommendation['vote_average']); ?></span> <span>⭐</span>
             </div>

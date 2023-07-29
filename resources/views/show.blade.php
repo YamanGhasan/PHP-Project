@@ -66,7 +66,7 @@
                         @foreach ($recommendations as $recommendation)
                         <div class="movie-card">
                                 <img src="https://image.tmdb.org/t/p/w500{{ $recommendation['poster_path'] }}" class="movie-poster" alt="{{ $recommendation['title'] }} Poster">
-                                <h2 class="movie-title"><a href="{{ route('movie.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['title'] }}</a></h2>
+                                <h2 class="recommendationsTitle"><a href="{{ route('movie.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['title'] }}</a></h2>
                                 <p class="movie-details">{{ $recommendation['release_date'] }}</p>
                 <span class="vote-average">{{ $recommendation['vote_average'] }}</span> <span>⭐</span>
 </div>
@@ -131,7 +131,7 @@
         @foreach ($recommendationsTV as $recommendation)
         <div class="movie-card">
                 <img src="https://image.tmdb.org/t/p/w500{{ $recommendation['poster_path'] }}" class="movie-poster" alt="{{ $recommendation['name'] }} Poster">
-                <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['name'] }}</a></h2>
+                <h2 class="recommendationsTitle"><a href="{{ route('tvshow.show', ['id' => $recommendation['id']]) }}">{{ $recommendation['name'] }}</a></h2>
                 <p class="movie-details">{{ $recommendation['first_air_date'] }}</p>
                 <span class="vote-average">{{ $recommendation['vote_average'] }}</span> <span>⭐</span>
             </div>
