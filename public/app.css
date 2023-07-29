@@ -74,6 +74,17 @@ box-shadow: 0 0 10px rgba(175, 169, 169, 0.2);
 border-radius: 20px;
 
 }
+.movie-info {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+  }
+  
+  .movie-info poster {
+    width: 100px; /* Set the width of the image */
+    height: 100px; /* Set the height of the image */
+    margin-right: 10px; /* Add some space between the image and the text */
+  }
+
  
 .container .movie-title a{
     color: #121212;
@@ -127,6 +138,22 @@ border-radius: 20px;
     border-radius: 5px;
     width: 100%;
     text-align: center;
+}
+.details-container {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.details-container h2, .details-container h4, .details-container p, .details-container .no-descriptors {
+    margin: 5px 0;
+}
+
+.details-container .descriptor {
+    margin-right: 5px;
+}
+
+.details-container form {
+    margin-top: 10px;
 }
 
 .movie-info h1 {

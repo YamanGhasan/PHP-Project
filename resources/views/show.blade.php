@@ -13,56 +13,58 @@
       <a href="{{ route('movies.index') }}" class="btns" >Go to homepage</a>
   </div>
         @if (isset($movie))
-            <div class="movie-info">
-            <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
-                <h2 class="movie-title">{{ $movie['title'] }}</h2>
-                <h4>{{ $movie['overview'] }}</h4>
+        <div class="movie-info">
+    <div class="poster-container">
+        <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+    </div>
+    <div class="details-container">
+        <h2 class="movie-title">{{ $movie['title'] }}</h2>
+        <h4>{{ $movie['overview'] }}</h4>
 
-                @if (isset($movie['release_date']))
-                    <p>Release Date: {{ $movie['release_date'] }}</p>
-                @endif
+        @if (isset($movie['release_date']))
+            <p>Release Date: {{ $movie['release_date'] }}</p>
+        @endif
 
-                @if (isset($movie['genres']))
-                    <p>Genres:
-                        @foreach ($movie['genres'] as $genre)
-                            {{ $genre['name'] }},
-                        @endforeach
-                    </p>
-                @endif
+        @if (isset($movie['genres']))
+            <p>Genres:
+                @foreach ($movie['genres'] as $genre)
+                    {{ $genre['name'] }},
+                @endforeach
+            </p>
+        @endif
 
-                @if (isset($movie['homepage']))
-                  <p>Homepage: <a href="{{ $movie['homepage'] }}">{{ $movie['homepage'] }}</a></p>
-                @endif
+        @if (isset($movie['homepage']))
+            <p>Homepage: <a href="{{ $movie['homepage'] }}">{{ $movie['homepage'] }}</a></p>
+        @endif
 
-                <p>Popularity: {{ $movie['popularity'] }}</p>
-                <p>Runtime: {{ $movie['runtime'] }} minutes</p>
-                <p>Tagline: {{ $movie['tagline'] }}</p>
-                <p>Vote Average: {{ $movie['vote_average'] }}</p>
-                <p>Vote Count: {{ $movie['vote_count'] }}</p>
+        <p>Popularity: {{ $movie['popularity'] }}</p>
+        <p>Number of Seasons: {{ $movie['number_of_seasons'] }}</p>
+        <p>Number of Episodes: {{ $movie['number_of_episodes'] }}</p>
+        <p>Vote Average: {{ $movie['vote_average'] }}</p>
+        <p>Vote Count: {{ $movie['vote_count'] }}</p>
 
-                @if (isset($contentRatings['results']) && count($contentRatings['results']) > 0)
-                    <h2>Content Descriptors</h2>
-                    @foreach ($contentRatings['results'] as $result)
-                        @if (isset($result['descriptors']) && is_array($result['descriptors']))
-                            @foreach ($result['descriptors'] as $descriptor)
-                                <span class="descriptor">{{ $descriptor }}</span> 
-                            @endforeach
-                        @endif
+        @if (isset($contentRatings['results']) && count($contentRatings['results']) > 0)
+            <h2>Content Descriptors</h2>
+            @foreach ($contentRatings['results'] as $result)
+                @if (isset($result['descriptors']) && is_array($result['descriptors']))
+                    @foreach ($result['descriptors'] as $descriptor)
+                        <span class="descriptor">{{ $descriptor }}</span> 
                     @endforeach
-                @else
-                    <p class="no-descriptors">No content descriptors available.</p>
                 @endif
-                <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie']) }}">
-    @csrf
-    <input type="hidden" name="type" value="movie">
-    <button type="submit" class="   font-family:  Arial, Helvetica, sans-serif;
-    color: black;
-    text-decoration: none;
-    background-color: #f4c518;
-    font-size: 30px;
-    border-radius: 4px;">Add to Favorite</button>
-</form>
-</div>      
+            @endforeach
+        @else
+            <p class="no-descriptors">No content descriptors available.</p>
+        @endif
+
+        <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie']) }}">
+            @csrf
+            <input type="hidden" name="type" value="movie">
+            <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+        </form>
+    </div>
+</div>
+
+
   <!-- Movie recommendations section -->
  
                 @if (isset($recommendations) && count($recommendations) > 0)

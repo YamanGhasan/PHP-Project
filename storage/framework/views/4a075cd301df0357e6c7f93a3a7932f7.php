@@ -13,56 +13,58 @@
       <a href="<?php echo e(route('movies.index')); ?>" class="btns" >Go to homepage</a>
   </div>
         <?php if(isset($movie)): ?>
-            <div class="movie-info">
-            <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" alt="<?php echo e($movie['title']); ?> Poster">
-                <h2 class="movie-title"><?php echo e($movie['title']); ?></h2>
-                <h4><?php echo e($movie['overview']); ?></h4>
+        <div class="movie-info">
+    <div class="poster-container">
+        <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" alt="<?php echo e($movie['title']); ?> Poster">
+    </div>
+    <div class="details-container">
+        <h2 class="movie-title"><?php echo e($movie['title']); ?></h2>
+        <h4><?php echo e($movie['overview']); ?></h4>
 
-                <?php if(isset($movie['release_date'])): ?>
-                    <p>Release Date: <?php echo e($movie['release_date']); ?></p>
-                <?php endif; ?>
+        <?php if(isset($movie['release_date'])): ?>
+            <p>Release Date: <?php echo e($movie['release_date']); ?></p>
+        <?php endif; ?>
 
-                <?php if(isset($movie['genres'])): ?>
-                    <p>Genres:
-                        <?php $__currentLoopData = $movie['genres']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $genre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php echo e($genre['name']); ?>,
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </p>
-                <?php endif; ?>
+        <?php if(isset($movie['genres'])): ?>
+            <p>Genres:
+                <?php $__currentLoopData = $movie['genres']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $genre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php echo e($genre['name']); ?>,
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </p>
+        <?php endif; ?>
 
-                <?php if(isset($movie['homepage'])): ?>
-                  <p>Homepage: <a href="<?php echo e($movie['homepage']); ?>"><?php echo e($movie['homepage']); ?></a></p>
-                <?php endif; ?>
+        <?php if(isset($movie['homepage'])): ?>
+            <p>Homepage: <a href="<?php echo e($movie['homepage']); ?>"><?php echo e($movie['homepage']); ?></a></p>
+        <?php endif; ?>
 
-                <p>Popularity: <?php echo e($movie['popularity']); ?></p>
-                <p>Runtime: <?php echo e($movie['runtime']); ?> minutes</p>
-                <p>Tagline: <?php echo e($movie['tagline']); ?></p>
-                <p>Vote Average: <?php echo e($movie['vote_average']); ?></p>
-                <p>Vote Count: <?php echo e($movie['vote_count']); ?></p>
+        <p>Popularity: <?php echo e($movie['popularity']); ?></p>
+        <p>Number of Seasons: <?php echo e($movie['number_of_seasons']); ?></p>
+        <p>Number of Episodes: <?php echo e($movie['number_of_episodes']); ?></p>
+        <p>Vote Average: <?php echo e($movie['vote_average']); ?></p>
+        <p>Vote Count: <?php echo e($movie['vote_count']); ?></p>
 
-                <?php if(isset($contentRatings['results']) && count($contentRatings['results']) > 0): ?>
-                    <h2>Content Descriptors</h2>
-                    <?php $__currentLoopData = $contentRatings['results']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php if(isset($result['descriptors']) && is_array($result['descriptors'])): ?>
-                            <?php $__currentLoopData = $result['descriptors']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $descriptor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <span class="descriptor"><?php echo e($descriptor); ?></span> 
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
+        <?php if(isset($contentRatings['results']) && count($contentRatings['results']) > 0): ?>
+            <h2>Content Descriptors</h2>
+            <?php $__currentLoopData = $contentRatings['results']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if(isset($result['descriptors']) && is_array($result['descriptors'])): ?>
+                    <?php $__currentLoopData = $result['descriptors']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $descriptor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <span class="descriptor"><?php echo e($descriptor); ?></span> 
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <?php else: ?>
-                    <p class="no-descriptors">No content descriptors available.</p>
                 <?php endif; ?>
-                <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
-    <?php echo csrf_field(); ?>
-    <input type="hidden" name="type" value="movie">
-    <button type="submit" class="   font-family:  Arial, Helvetica, sans-serif;
-    color: black;
-    text-decoration: none;
-    background-color: #f4c518;
-    font-size: 30px;
-    border-radius: 4px;">Add to Favorite</button>
-</form>
-</div>      
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php else: ?>
+            <p class="no-descriptors">No content descriptors available.</p>
+        <?php endif; ?>
+
+        <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="type" value="movie">
+            <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+        </form>
+    </div>
+</div>
+
+
   <!-- Movie recommendations section -->
  
                 <?php if(isset($recommendations) && count($recommendations) > 0): ?>
