@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 
-Route::get('/', [MovieController::class, 'getPopularPeople']);
+// Route::get('/', [MovieController::class, 'getPopularPeople']);
 
 Route::get('/register', function () {
     return view('register');

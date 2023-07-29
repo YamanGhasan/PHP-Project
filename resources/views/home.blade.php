@@ -118,7 +118,12 @@
         <div id="movies-grid">
             @foreach ($TvShows as $tvShow)
                 <div class="movie-card">
-                    <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['original_name'] }} Poster">
+                <!-- <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1690640739834_69"> -->
+    <!-- <form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" id="fetchVideoForm"> -->
+        <!-- @csrf -->
+        <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['original_name'] }} Poster" onclick="submitFetchVideoForm()">
+    <!-- </form> -->
+<!-- </div> -->
                     <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $tvShow['id']]) }}">{{ $tvShow['name'] }}</a></h2>
                     <div class="movie-detail">
           @if (isset($tvShow['first_air_date']))

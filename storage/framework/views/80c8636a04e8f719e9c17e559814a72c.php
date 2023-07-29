@@ -118,7 +118,12 @@
         <div id="movies-grid">
             <?php $__currentLoopData = $TvShows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tvShow): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="movie-card">
-                    <img src="https://image.tmdb.org/t/p/w500<?php echo e($tvShow['poster_path']); ?>" class="movie-poster" alt="<?php echo e($tvShow['original_name']); ?> Poster">
+                <!-- <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1690640739834_69"> -->
+    <!-- <form action="<?php echo e(route('fetchVideoData', ['seriesId' => $tvShow['id']])); ?>" method="POST" id="fetchVideoForm"> -->
+        <!-- <?php echo csrf_field(); ?> -->
+        <img src="https://image.tmdb.org/t/p/w500<?php echo e($tvShow['poster_path']); ?>" class="movie-poster" alt="<?php echo e($tvShow['original_name']); ?> Poster" onclick="submitFetchVideoForm()">
+    <!-- </form> -->
+<!-- </div> -->
                     <h2 class="movie-title"><a href="<?php echo e(route('tvshow.show', ['id' => $tvShow['id']])); ?>"><?php echo e($tvShow['name']); ?></a></h2>
                     <div class="movie-detail">
           <?php if(isset($tvShow['first_air_date'])): ?>
