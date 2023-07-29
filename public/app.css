@@ -74,10 +74,7 @@ box-shadow: 0 0 10px rgba(175, 169, 169, 0.2);
 border-radius: 20px;
 
 }
-.movie-info {
-    display: flex;
-    align-items: center; /* Vertically center the items */
-  }
+ 
   
   .movie-info poster {
     width: 100px; /* Set the width of the image */
@@ -137,23 +134,20 @@ border-radius: 20px;
     padding: 7px;
     border-radius: 5px;
     width: 100%;
-    text-align: center;
+    /* text-align: center; */
 }
+.movie-info {
+    display: flex;
+    align-items: flex-start; /* Adjust alignment as needed */
+}
+
+.poster-container {
+    flex: 0 0 auto; /* Allow the container to shrink and grow, but not automatically */
+    margin-right: 10px; /* Add some spacing between the containers */
+}
+
 .details-container {
-    display: block;
-    margin-bottom: 10px;
-}
-
-.details-container h2, .details-container h4, .details-container p, .details-container .no-descriptors {
-    margin: 5px 0;
-}
-
-.details-container .descriptor {
-    margin-right: 5px;
-}
-
-.details-container form {
-    margin-top: 10px;
+    flex: 1; /* Allow the container to take remaining available space */
 }
 
 .movie-info h1 {

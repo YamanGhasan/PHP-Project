@@ -38,8 +38,6 @@
         <?php endif; ?>
 
         <p>Popularity: <?php echo e($movie['popularity']); ?></p>
-        <p>Number of Seasons: <?php echo e($movie['number_of_seasons']); ?></p>
-        <p>Number of Episodes: <?php echo e($movie['number_of_episodes']); ?></p>
         <p>Vote Average: <?php echo e($movie['vote_average']); ?></p>
         <p>Vote Count: <?php echo e($movie['vote_count']); ?></p>
 
@@ -86,7 +84,10 @@
 <div class="container">
         <?php elseif(isset($tvShow)): ?>
             <div class="movie-info">
+    <div class="poster-container">
             <img class="poster" src="https://image.tmdb.org/t/p/w500<?php echo e($tvShow['poster_path']); ?>" alt="<?php echo e($tvShow['name']); ?> Poster">
+            </div>
+    <div class="details-container">
             <h2 class="movie-title"><a href="<?php echo e(route('tvshow.show', ['id' => $tvShow['id']])); ?>"><?php echo e($tvShow['name']); ?></a></h2>
                 <h4><?php echo e($tvShow['overview']); ?></h4>
 
@@ -130,6 +131,7 @@
     <input type="hidden" name="type" value="tv">
     <button type="submit" class="add-favorite-btn-Recommendation">Add to Favorite</button>
 </form>
+</div>
 </div>
 <!-- TV show recommendations section -->
 <?php if(isset($recommendationsTV) && count($recommendationsTV) > 0): ?>

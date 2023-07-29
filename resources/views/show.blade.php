@@ -38,8 +38,6 @@
         @endif
 
         <p>Popularity: {{ $movie['popularity'] }}</p>
-        <p>Number of Seasons: {{ $movie['number_of_seasons'] }}</p>
-        <p>Number of Episodes: {{ $movie['number_of_episodes'] }}</p>
         <p>Vote Average: {{ $movie['vote_average'] }}</p>
         <p>Vote Count: {{ $movie['vote_count'] }}</p>
 
@@ -86,7 +84,10 @@
 <div class="container">
         @elseif (isset($tvShow))
             <div class="movie-info">
+    <div class="poster-container">
             <img class="poster" src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" alt="{{ $tvShow['name'] }} Poster">
+            </div>
+    <div class="details-container">
             <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $tvShow['id']]) }}">{{ $tvShow['name'] }}</a></h2>
                 <h4>{{ $tvShow['overview'] }}</h4>
 
@@ -130,6 +131,7 @@
     <input type="hidden" name="type" value="tv">
     <button type="submit" class="add-favorite-btn-Recommendation">Add to Favorite</button>
 </form>
+</div>
 </div>
 <!-- TV show recommendations section -->
 @if (isset($recommendationsTV) && count($recommendationsTV) > 0)
