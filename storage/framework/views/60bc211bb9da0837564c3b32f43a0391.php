@@ -30,7 +30,7 @@
 <h1>Age:  <span><?php echo e($user->age); ?></span> </h1>
  
   <h1 class="myfavh1">My Favorites</h>
-<div id="movies-grid">
+<div id="progile-movies-grid">
     <?php $__currentLoopData = $movies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $movie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" class="movie-poster" alt="<?php echo e($movie['title']); ?> poster">

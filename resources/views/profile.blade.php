@@ -30,7 +30,7 @@
 <h1>Age:  <span>{{ $user->age }}</span> </h1>
  
   <h1 class="myfavh1">My Favorites</h>
-<div id="movies-grid">
+<div id="progile-movies-grid">
     @foreach ($movies as $movie)
         <div class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" class="movie-poster" alt="{{ $movie['title'] }} poster">
