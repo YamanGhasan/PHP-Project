@@ -112,27 +112,56 @@ class MovieController extends Controller
 
  
  
-
-
-public function fetchVideoData()
+public function fetchVideoData($seriesId)
 {
-    $movieId = '299536';
     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
-    $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
+    $videoEndpoint = "https://api.themoviedb.org/3/tv/{$seriesId}/videos?api_key={$apiKey}";
 
     // Send a GET request to fetch video data
     $response = Http::get($videoEndpoint);
-    $data = $response->json();
+    $videoData = $response->json();
 
     // Redirect to the video page and pass the data as a parameter
-    return redirect()->route('videoPage', ['data' => json_encode($data)]);
+    return redirect()->route('showVideoPage', ['video_id' => $seriesId, 'videoData' => $videoData]);
+
 }
+
 
 public function showVideoPage(Request $request)
 {
-    $videoData = json_decode($request->input('data'), true);
-    return view('video-page', ['videoData' => $videoData]);
+    $seriesId = $request->input('seriesId');
+    $videoData = $request->input('videoData');
+
+    if (is_string($videoData)) {
+        $decodedVideoData = json_decode($videoData, true);
+    } else {
+  
+        $decodedVideoData = [];
+    }
+
+    return view('video-page', ['seriesId' => $seriesId, 'videoData' => $decodedVideoData]);
 }
+
+
+// public function fetchVideoData()
+// {
+//     $movieId = '299536';
+//     $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
+//     $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
+
+//     // Send a GET request to fetch video data
+//     $response = Http::get($videoEndpoint);
+//     $data = $response->json();
+
+//     // Redirect to the video page and pass the data as a parameter
+//     return redirect()->route('videoPage', ['data' => json_encode($data)]);
+// }
+
+// public function showVideoPage(Request $request)
+// {
+//     $videoData = json_decode($request->input('data'), true);
+//     return view('video-page', ['videoData' => $videoData]);
+// }
 
 
 

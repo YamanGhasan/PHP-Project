@@ -24,9 +24,7 @@ Route::post('/login', [UserMovieController::class, 'login'])->name('login');
 Route::get('/movies/search', [MovieController::class, 'search'])->name('movies.search');
 Route::get('/movie/{id}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('/tvshow/{id}', [MovieController::class, 'show'])->name('tvshow.show');
-Route::post('/fetch-video-data', [MovieController::class, 'fetchVideoData'])->name('fetchVideoData');
-Route::get('/video-page', [MovieController::class, 'showVideoPage'])->name('videoPage');
-
+ 
 
 Route::get('/profile', [UserMovieController::class, 'profile'])->name('profile')->middleware('auth');
 
@@ -36,8 +34,13 @@ Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])
 Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite')->middleware('auth');
 
 Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
+Route::post('/fetchVideoData/{seriesId}', [MovieController::class, 'fetchVideoData'])->name('fetchVideoData');
 
+ 
+Route::post('/showVideoPage', [MovieController::class,'showVideoPage'])->name('postShowVideoPage');
 
+Route::get('/show-video/{video_id}', [MovieController::class,'showVideoPage'])->name('showVideoPage');
+ 
 
 
 

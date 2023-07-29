@@ -48,10 +48,7 @@
                     <figure class="sqs-block-image-figure intrinsic" style="max-width:1000px;" id="yui_3_17_2_1_1690640739834_71">
                       <a class="sqs-block-image-link" href="/elemental" id="yui_3_17_2_1_1690640739834_70">
                         <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1690640739834_69">
-                          <!-- <form action="{{ route('fetchVideoData') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="watch-video-button">Watch Video!</button>
-                          </form> -->
+                           
                           <div class="sqs-image-shape-container-element has-aspect-ratio" style="position: relative; padding-bottom:31.700000762939453%; overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);" id="yui_3_17_2_1_1690640739834_68">
                             <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png" data-image="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png" data-image-dimensions="1000x317" data-image-focal-point="0.5,0.5" alt="" data-load="false" src="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png" width="1000" height="317" sizes="100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" srcset="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/46f34534-920f-4e0c-92d0-ba049086c623/ele_logo2.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs">
                           </div>
@@ -118,12 +115,15 @@
         <div id="movies-grid">
             @foreach ($TvShows as $tvShow)
                 <div class="movie-card">
-                <!-- <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1690640739834_69"> -->
-    <!-- <form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" id="fetchVideoForm"> -->
-        <!-- @csrf -->
-        <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['original_name'] }} Poster" onclick="submitFetchVideoForm()">
-    <!-- </form> -->
-<!-- </div> -->
+                <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1690640739834_69">
+    <form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" id="fetchVideoForm">
+        @csrf
+        <!-- Add a hidden input field to store the video ID -->
+        <input type="hidden" name="video_id" id="videoIdInput">
+        <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['original_name'] }}" onclick="submitFetchVideoForm()">
+    </form>
+</div>
+
                     <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $tvShow['id']]) }}">{{ $tvShow['name'] }}</a></h2>
                     <div class="movie-detail">
           @if (isset($tvShow['first_air_date']))
@@ -187,6 +187,17 @@
     @endif
    
     
-    
+    <script>
+    function submitFetchVideoForm() {
+        // Get the video ID from the data attribute of the div
+        const videoId = '{{ $tvShow['id'] }}';
+
+        // Set the video ID as the value of the hidden input field
+        document.getElementById('videoIdInput').value = videoId;
+
+        // Submit the form
+        document.getElementById('fetchVideoForm').submit();
+    }
+</script> 
 </body>
 </html>
