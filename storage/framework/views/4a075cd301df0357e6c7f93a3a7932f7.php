@@ -55,7 +55,12 @@
                 <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
     <?php echo csrf_field(); ?>
     <input type="hidden" name="type" value="movie">
-    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+    <button type="submit" class="   font-family:  Arial, Helvetica, sans-serif;
+    color: black;
+    text-decoration: none;
+    background-color: #f4c518;
+    font-size: 30px;
+    border-radius: 4px;">Add to Favorite</button>
 </form>
 </div>      
   <!-- Movie recommendations section -->
@@ -121,7 +126,7 @@
                     <form method="POST" action="<?php echo e(route('tvshows.favorite', ['id' => $tvShow['id'], 'type' => 'tv'])); ?>">
     <?php echo csrf_field(); ?>
     <input type="hidden" name="type" value="tv">
-    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+    <button type="submit" class="add-favorite-btn-Recommendation">Add to Favorite</button>
 </form>
 </div>
 <!-- TV show recommendations section -->

@@ -109,6 +109,15 @@ border-radius: 20px;
     border-radius: 4px;
     
   }
+  .add-favorite-btn-Recommendation{
+    font-family:  Arial, Helvetica, sans-serif;
+    color: black;
+    text-decoration: none;
+    background-color: #f4c518;
+    font-size: 30px;
+    border-radius: 4px;
+    border-color: #cfcfcf;
+  }
 .movie-info {
     background-color: #fff;
     box-shadow: 5px 5px 5px  #cfcfcf;
