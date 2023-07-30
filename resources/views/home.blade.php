@@ -108,7 +108,7 @@
     <p>No popular people found.</p>
 @endif
 
-<!--   -->
+ 
 </div>
     @if ($TvShows && count($TvShows) > 0)
         <h1 id="title">Popular TV Shows</h1>
@@ -116,13 +116,9 @@
             @foreach ($TvShows as $tvShow)
                 <div class="movie-card">
                 <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1690640739834_69">
-    <form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" id="fetchVideoForm">
-        @csrf
-        <!-- Add a hidden input field to store the video ID -->
-        <input type="hidden" name="video_id" id="videoIdInput">
-        <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['original_name'] }}" onclick="submitFetchVideoForm()">
-    </form>
-</div>
+                <img src="https://image.tmdb.org/t/p/w500{{ $tvShow['poster_path'] }}" class="movie-poster" alt="{{ $tvShow['original_name'] }}">
+  </div>
+
 
                     <h2 class="movie-title"><a href="{{ route('tvshow.show', ['id' => $tvShow['id']]) }}">{{ $tvShow['name'] }}</a></h2>
                     <div class="movie-detail">
@@ -134,6 +130,13 @@
                         <br>
                        <span class="vote-average">{{ $tvShow['vote_average'] }}</span> <span>⭐</span>
                        <br> <br>
+                       <form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" class="fetch-video-form">
+    @csrf
+    <!-- Add a hidden input field to store the seriesId -->
+    <input type="hidden" name="seriesId" value="{{ $tvShow['id'] }}">
+    <button type="submit" class="add-favorite-btn">Watch video</button>
+</form>
+
                          <!-- Add to Favorite button -->
                          <form method="POST" action="{{ route('tvshows.favorite', ['id' => $tvShow['id'], 'type' => 'tv']) }}">
     @csrf
@@ -187,17 +190,18 @@
     @endif
    
     
+ 
     <script>
-    function submitFetchVideoForm() {
-        // Get the video ID from the data attribute of the div
-        const videoId = '{{ $tvShow['id'] }}';
+    function submitFetchVideoForm(event) {
+        event.preventDefault(); // Prevent default form submission
+        var form = event.target.closest('.fetch-video-form');
+        var seriesId = form.querySelector('input[name="seriesId"]').value;
 
-        // Set the video ID as the value of the hidden input field
-        document.getElementById('videoIdInput').value = videoId;
-
-        // Submit the form
-        document.getElementById('fetchVideoForm').submit();
+        // Redirect to the video page with the seriesId parameter
+        window.location.href = "{{ route('video-page') }}?seriesId=" + seriesId;
     }
-</script> 
+</script>
+
+
 </body>
 </html>

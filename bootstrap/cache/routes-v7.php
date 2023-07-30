@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::X2pZoTOyxNi0YjGl',
+            '_route' => 'generated::gB5yKC4lAKsSXw7b',
           ),
           1 => NULL,
           2 => 
@@ -142,7 +142,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::XQuGYs2dz02H3Ikh',
+            '_route' => 'generated::DTXUWT0KXdCcwTGq',
           ),
           1 => NULL,
           2 => 
@@ -268,18 +268,19 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/showVideoPage' => 
+      '/video-page' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'postShowVideoPage',
+            '_route' => 'video-page',
           ),
           1 => NULL,
           2 => 
           array (
-            'POST' => 0,
+            'GET' => 0,
+            'HEAD' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -290,7 +291,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/movie(?|/([^/]++)(*:25)|s/([^/]++)/favorite(*:51))|/tvshow(?|/([^/]++)(*:78)|s/([^/]++)/favorite(*:104))|/f(?|avorites/remove/([^/]++)(*:142)|etchVideoData/([^/]++)(*:172))|/show\\-video/([^/]++)(*:202))/?$}sDu',
+      0 => '{^(?|/movie(?|/([^/]++)(*:25)|s/([^/]++)/favorite(*:51))|/tvshow(?|/([^/]++)(*:78)|s/([^/]++)/favorite(*:104))|/f(?|avorites/remove/([^/]++)(*:142)|etchVideoData/([^/]++)(*:172)))/?$}sDu',
     ),
     3 => 
     array (
@@ -421,29 +422,6 @@ app('router')->setCompiledRoutes(
           2 => 
           array (
             'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      202 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'showVideoPage',
-          ),
-          1 => 
-          array (
-            0 => 'video_id',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -612,7 +590,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::X2pZoTOyxNi0YjGl' => 
+    'generated::gB5yKC4lAKsSXw7b' => 
     array (
       'methods' => 
       array (
@@ -629,13 +607,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000003490000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000003600000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::X2pZoTOyxNi0YjGl',
+        'as' => 'generated::gB5yKC4lAKsSXw7b',
       ),
       'fallback' => false,
       'defaults' => 
@@ -688,7 +666,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::XQuGYs2dz02H3Ikh' => 
+    'generated::DTXUWT0KXdCcwTGq' => 
     array (
       'methods' => 
       array (
@@ -704,13 +682,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:45:"function () {
     return \\view(\'register\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000034c0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000003630000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::XQuGYs2dz02H3Ikh',
+        'as' => 'generated::DTXUWT0KXdCcwTGq',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1131,6 +1109,43 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
+    'video-page' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'video-page',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\MovieController@showVideoPage',
+        'controller' => 'App\\Http\\Controllers\\MovieController@showVideoPage',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'video-page',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
     'fetchVideoData' => 
     array (
       'methods' => 
@@ -1152,79 +1167,6 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'fetchVideoData',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'postShowVideoPage' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'showVideoPage',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\MovieController@showVideoPage',
-        'controller' => 'App\\Http\\Controllers\\MovieController@showVideoPage',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'postShowVideoPage',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'showVideoPage' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'show-video/{video_id}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\MovieController@showVideoPage',
-        'controller' => 'App\\Http\\Controllers\\MovieController@showVideoPage',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'showVideoPage',
       ),
       'fallback' => false,
       'defaults' => 
