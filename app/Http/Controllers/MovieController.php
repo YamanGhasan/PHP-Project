@@ -196,8 +196,6 @@ public function addToFavoritesTvShow($id)
             'title' => $tvShow['name'],
             'poster_path' => $tvShow['poster_path'],
         ]);
-
-        // Redirect back to the TV show page with a success message
         return redirect()->back()->with('message', 'TV show added to favorites.');
     } else {
         return redirect()->back()->with('error', 'Failed to retrieve TV show details.');
