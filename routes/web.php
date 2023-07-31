@@ -34,15 +34,7 @@ Route::post('/movies/{id}/favorite', [MovieController::class, 'addToFavorites'])
 Route::post('/tvshows/{id}/favorite', [MovieController::class, 'addToFavoritesTvShow'])->name('tvshows.favorite')->middleware('auth');
 
 Route::delete('/favorites/remove/{id}', [MovieController::class, 'remove'])->name('remove_favorite');
-// Route::post('/fetchVideoData/{seriesId}', [MovieController::class, 'fetchVideoData'])->name('fetchVideoData');
-
-
-
-// Route::post('/fetchVideoData', [MovieController::class, 'fetchVideoData'])->name('fetchVideoData');
-
-// Route::post('/showVideoPage', [MovieController::class,'showVideoPage'])->name('postShowVideoPage');
-
-// Route::get('/show-video/{video_id}', [MovieController::class,'showVideoPage'])->name('showVideoPage');
+ 
 
 Route::get('/video-page', [MovieController::class, 'showVideoPage'])->name('video-page');
 
