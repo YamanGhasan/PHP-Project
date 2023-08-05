@@ -50,17 +50,25 @@ class UserMovieController extends Controller
  
 public function login(Request $request)
 {
+    if (Auth::check()) {
+        // User is already authenticated, redirect to home page
+        return redirect()->route('movies.index');
+    }
+
     $credentials = $request->only('email', 'password');
     $user = MovieUser::where('email', $credentials['email'])->first();
+    
     if (Auth::attempt($credentials)) {
         // Authentication successful
         $request->session()->put('username', $user->username);
-        return redirect()->route('movies.index');
+        return redirect()->route('movies.index'); // Redirect to home page
     }
 
     return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
 }
+
  
+
 
 public function profile()
 {
