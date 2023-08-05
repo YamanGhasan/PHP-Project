@@ -148,11 +148,8 @@ public function addToFavorites($id)
 {
     $user = auth()->user();
     if (!$user) {
-        // Handle case when user is not authenticated
         return redirect()->route('login');
     }
-
-    // Check if the movie is already in the user's favorites
     if ($user->favorites()->where('movie_id', $id)->exists()) {
         return redirect()->back()->with('error', 'Movie is already in favorites.');
     }

@@ -15,10 +15,18 @@
             <input type="text" name="query" id="search-input" placeholder="Search IMDB" required/>
         </form>
         <span class="username">
-   <h1>
-        <a href="{{ route('profile') }}">{{ session('username') }} Profile👤</a> 
-</h1>
+    <h1>
+        @if(auth()->check())
+            {{ session('username') }}
+        @else
+            <a href="{{ route('profile') }}" class="profile-btn">
+                Log in
+            </a> 
+        @endif
+    </h1>
 </span>
+
+
 
         <!-- <button type="submit" class="watch-video-button"></button> -->
         <!-- <button type="submit" class="watch-video-button"></button> -->
@@ -127,12 +135,13 @@
      <span>First Air Date:</span> {{ $firstAirDate->format('Y') }} 
 @endif
 <br>
+<br>
                         <br>
                        <span class="vote-average">{{ $tvShow['vote_average'] }}</span> <span>⭐</span>
                        <br> <br>
                        <form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" class="fetch-video-form">
     @csrf
-    <!-- Add a hidden input field to store the seriesId -->
+ 
     <input type="hidden" name="seriesId" value="{{ $tvShow['id'] }}">
     <button type="submit" class="add-favorite-btn">Watch video</button>
 </form>

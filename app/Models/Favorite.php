@@ -13,7 +13,6 @@ class Favorite extends Model
 
     protected $fillable = [
         'user_id', 'movie_id', 'title', 'poster_path',
-        // Add other fillable fields here
     ];
 
     public function user()

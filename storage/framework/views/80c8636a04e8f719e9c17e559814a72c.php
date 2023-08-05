@@ -15,10 +15,19 @@
             <input type="text" name="query" id="search-input" placeholder="Search IMDB" required/>
         </form>
         <span class="username">
-   <h1>
-        <a href="<?php echo e(route('profile')); ?>"><?php echo e(session('username')); ?> Profile👤</a> 
-</h1>
+    <h1>
+        <?php if(auth()->check()): ?>
+            <?php echo e(session('username')); ?>
+
+        <?php else: ?>
+            <a href="<?php echo e(route('profile')); ?>" class="profile-btn">
+                Log in
+            </a> 
+        <?php endif; ?>
+    </h1>
 </span>
+
+
 
         <!-- <button type="submit" class="watch-video-button"></button> -->
         <!-- <button type="submit" class="watch-video-button"></button> -->
@@ -127,12 +136,13 @@
      <span>First Air Date:</span> <?php echo e($firstAirDate->format('Y')); ?> 
 <?php endif; ?>
 <br>
+<br>
                         <br>
                        <span class="vote-average"><?php echo e($tvShow['vote_average']); ?></span> <span>⭐</span>
                        <br> <br>
                        <form action="<?php echo e(route('fetchVideoData', ['seriesId' => $tvShow['id']])); ?>" method="POST" class="fetch-video-form">
     <?php echo csrf_field(); ?>
-    <!-- Add a hidden input field to store the seriesId -->
+ 
     <input type="hidden" name="seriesId" value="<?php echo e($tvShow['id']); ?>">
     <button type="submit" class="add-favorite-btn">Watch video</button>
 </form>
