@@ -125,6 +125,13 @@
 @else
     <p class="no-descriptors">No content descriptors available.</p>
 @endif
+<form action="{{ route('fetchVideoData', ['seriesId' => $tvShow['id']]) }}" method="POST" class="fetch-video-form">
+    @csrf
+ 
+    <input type="hidden" name="seriesId" value="{{ $tvShow['id'] }}">
+    <button type="submit" class="add-favorite-btn-Recommendation">Watch video</button>
+</form>
+
                     <!-- Add to Favorite button -->
                     <form method="POST" action="{{ route('tvshows.favorite', ['id' => $tvShow['id'], 'type' => 'tv']) }}">
     @csrf

@@ -140,13 +140,7 @@
                         <br>
                        <span class="vote-average"><?php echo e($tvShow['vote_average']); ?></span> <span>⭐</span>
                        <br> <br>
-                       <form action="<?php echo e(route('fetchVideoData', ['seriesId' => $tvShow['id']])); ?>" method="POST" class="fetch-video-form">
-    <?php echo csrf_field(); ?>
- 
-    <input type="hidden" name="seriesId" value="<?php echo e($tvShow['id']); ?>">
-    <button type="submit" class="add-favorite-btn">Watch video</button>
-</form>
-
+  
                          <!-- Add to Favorite button -->
                          <form method="POST" action="<?php echo e(route('tvshows.favorite', ['id' => $tvShow['id'], 'type' => 'tv'])); ?>">
     <?php echo csrf_field(); ?>
