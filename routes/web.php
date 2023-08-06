@@ -43,5 +43,6 @@ Route::post('/fetchVideoData/{seriesId}', [MovieController::class, 'fetchVideoDa
 
 
 
-
-
+Route::post('/fetch-video-data', [MovieController::class, 'fetchVideoFirstData'])->name('fetchVideoFirstData');
+Route::get('/video-page', [MovieController::class, 'showVideo'])->name('videoPage');
+Route::get('/video-page', [MovieController::class, 'showVideoPage'])->name('video-page');

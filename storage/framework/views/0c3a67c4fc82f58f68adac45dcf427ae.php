@@ -130,6 +130,7 @@
  
     <input type="hidden" name="seriesId" value="<?php echo e($tvShow['id']); ?>">
     <button type="submit" class="add-favorite-btn-Recommendation">Watch video</button>
+    <br>
 </form>
 
                     <!-- Add to Favorite button -->
@@ -142,7 +143,7 @@
 </div>
 <!-- TV show recommendations section -->
 <?php if(isset($recommendationsTV) && count($recommendationsTV) > 0): ?>
-    <h1 id="title">Recommendations</h1>
+    <h1 class="recommendationsTitle"> Recommendations </h1>
     <div id="movies-grid">
         <?php $__currentLoopData = $recommendationsTV; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $recommendation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="movie-card">

@@ -274,4 +274,23 @@ public function getPopularPeople()
         return null;
     }
 }
+public function fetchVideoFirstData()
+{
+    $movieId = '299536';
+    $apiKey = '22d966b39e45c68b73d1aaa2be9e9794';  
+    $videoEndpoint = "https://api.themoviedb.org/3/movie/{$movieId}/videos?api_key={$apiKey}";
+
+    // Send a GET request to fetch video data
+    $response = Http::get($videoEndpoint);
+    $data = $response->json();
+
+    // Redirect to the video page and pass the data as a parameter
+    return redirect()->route('videoPage', ['data' => json_encode($data)]);
+}
+
+public function showVideo(Request $request)
+{
+    $videoData = json_decode($request->input('data'), true);
+    return view('video-page', ['videoData' => $videoData]);
+}
 }
