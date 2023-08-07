@@ -64,11 +64,11 @@
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Movie</a>
+          <a href="#movie-section" class="navbar-link">Movie</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Tv Show</a>
+            <a href="#tv-section" class="navbar-link">Tv Show</a>
           </li>
 
         </ul>
@@ -87,9 +87,7 @@
 
   <main>
     <article>
- 
-      <!-- <section class="hero"> -->
-      <div class="containerTHis">
+     <div class="containerTHis">
   <div class="hero-content">
     <p class="hero-subtitle">IMDB</p>
     <h1 class="h1 hero-title">
@@ -145,7 +143,7 @@
 
   
       <section class="PopularTV">
-        <div class="container">
+        <div class="container" >
         <h2 class="h2 section-title">Popular People</h2>
 <?php if(!is_null($popularPeople) && count($popularPeople['results']) > 0): ?>
     <div class="popularPeopleSection">
@@ -191,8 +189,56 @@
 </section>
 <br>
 <br>
+<section class="PopularMovies">
+        <div class="container" id="movie-section">
+     
+              <h2 class="h2 section-title">Popular Movies</h2>
+              <?php if($movies && count($movies) > 0): ?>
+        <div id="movies-grid">
+            <?php $__currentLoopData = $movies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $movie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="movie-card">
+                    <img src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" class="movie-poster" alt="<?php echo e($movie['original_title']); ?> Poster">
+                    <h2 class="recommendationsTitle"><a href="<?php echo e(route('movie.show', ['id' => $movie['id']])); ?>"><?php echo e($movie['title']); ?></a></h2>
+                    <div class="movie-detail">
+                        <?php if(isset($movie['release_date'])): ?>
+                        <?php $releaseDate = new DateTime($movie['release_date']); ?>
+                        <span> Release Date:  <?php echo e($releaseDate->format('Y')); ?></span>
+                            <?php endif; ?>
+                
+<br> <br>
+                        <span class="vote-average"><?php echo e($movie['vote_average']); ?>⭐</span> 
+                        <br> <br>
+                        <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
+    <?php echo csrf_field(); ?>
+    <input type="hidden" name="type" value="movie">
+    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+</form>
+
+
+
+
+                    </div>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    <?php else: ?>
+        <p>No movies found.</p>
+    <?php endif; ?>
+   
+    
+ 
+    </section>
+              
+
+            
+
+       
+        </div>
+      </section>
+      <h>
+  <br><br>
       <section class="PopularTV">
-        <div class="container">
+        <div class="container"  id="tv-section">
               <h2 class="h2 section-title">Popular TV shows</h2>
               <?php if($TvShows && count($TvShows) > 0): ?>
         <div id="movies-grid">
@@ -241,55 +287,8 @@
       </section>
 
 
-<h>
-  <br><br>
-      <section class="PopularMovies">
-        <div class="container">
+
      
-              <h2 class="h2 section-title">Popular Movies</h2>
-              <?php if($movies && count($movies) > 0): ?>
-        <div id="movies-grid">
-            <?php $__currentLoopData = $movies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $movie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="movie-card">
-                    <img src="https://image.tmdb.org/t/p/w500<?php echo e($movie['poster_path']); ?>" class="movie-poster" alt="<?php echo e($movie['original_title']); ?> Poster">
-                    <h2 class="recommendationsTitle"><a href="<?php echo e(route('movie.show', ['id' => $movie['id']])); ?>"><?php echo e($movie['title']); ?></a></h2>
-                    <div class="movie-detail">
-                        <?php if(isset($movie['release_date'])): ?>
-                        <?php $releaseDate = new DateTime($movie['release_date']); ?>
-                        <span> Release Date:  <?php echo e($releaseDate->format('Y')); ?></span>
-                            <?php endif; ?>
-                
-<br> <br>
-                        <span class="vote-average"><?php echo e($movie['vote_average']); ?>⭐</span> 
-                        <br> <br>
-                        <form method="POST" action="<?php echo e(route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie'])); ?>">
-    <?php echo csrf_field(); ?>
-    <input type="hidden" name="type" value="movie">
-    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
-</form>
-
-
-
-
-                    </div>
-                </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
-    <?php else: ?>
-        <p>No movies found.</p>
-    <?php endif; ?>
-   
-    
- 
-    </section>
-              
-
-            
-
-       
-        </div>
-      </section>
-
 
       
 

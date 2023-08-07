@@ -295,9 +295,10 @@ border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(195, 255, 0, 0.2);
     text-align: center;
     font-family: arial;
-    background-color: #f1f1f1;
+    background-color:#000000;
     font-size: 20px;
     border-radius: 10px;
+    color: #f1f1f1;
 }
 
   .logout-btn{

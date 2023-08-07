@@ -63,11 +63,11 @@
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Movie</a>
+          <a href="#movie-section" class="navbar-link">Movie</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Tv Show</a>
+            <a href="#tv-section" class="navbar-link">Tv Show</a>
           </li>
 
         </ul>
@@ -86,9 +86,7 @@
 
   <main>
     <article>
- 
-      <!-- <section class="hero"> -->
-      <div class="containerTHis">
+     <div class="containerTHis">
   <div class="hero-content">
     <p class="hero-subtitle">IMDB</p>
     <h1 class="h1 hero-title">
@@ -144,7 +142,7 @@
 
   
       <section class="PopularTV">
-        <div class="container">
+        <div class="container" >
         <h2 class="h2 section-title">Popular People</h2>
 @if (!is_null($popularPeople) && count($popularPeople['results']) > 0)
     <div class="popularPeopleSection">
@@ -190,8 +188,56 @@
 </section>
 <br>
 <br>
+<section class="PopularMovies">
+        <div class="container" id="movie-section">
+     
+              <h2 class="h2 section-title">Popular Movies</h2>
+              @if ($movies && count($movies) > 0)
+        <div id="movies-grid">
+            @foreach ($movies as $movie)
+                <div class="movie-card">
+                    <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" class="movie-poster" alt="{{ $movie['original_title'] }} Poster">
+                    <h2 class="recommendationsTitle"><a href="{{ route('movie.show', ['id' => $movie['id']]) }}">{{ $movie['title'] }}</a></h2>
+                    <div class="movie-detail">
+                        @if (isset($movie['release_date']))
+                        <?php $releaseDate = new DateTime($movie['release_date']); ?>
+                        <span> Release Date:  {{ $releaseDate->format('Y') }}</span>
+                            @endif
+                
+<br> <br>
+                        <span class="vote-average">{{ $movie['vote_average'] }}⭐</span> 
+                        <br> <br>
+                        <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie']) }}">
+    @csrf
+    <input type="hidden" name="type" value="movie">
+    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
+</form>
+
+
+
+
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p>No movies found.</p>
+    @endif
+   
+    
+ 
+    </section>
+              
+
+            
+
+       
+        </div>
+      </section>
+      <h>
+  <br><br>
       <section class="PopularTV">
-        <div class="container">
+        <div class="container"  id="tv-section">
               <h2 class="h2 section-title">Popular TV shows</h2>
               @if ($TvShows && count($TvShows) > 0)
         <div id="movies-grid">
@@ -240,55 +286,8 @@
       </section>
 
 
-<h>
-  <br><br>
-      <section class="PopularMovies">
-        <div class="container">
+
      
-              <h2 class="h2 section-title">Popular Movies</h2>
-              @if ($movies && count($movies) > 0)
-        <div id="movies-grid">
-            @foreach ($movies as $movie)
-                <div class="movie-card">
-                    <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" class="movie-poster" alt="{{ $movie['original_title'] }} Poster">
-                    <h2 class="recommendationsTitle"><a href="{{ route('movie.show', ['id' => $movie['id']]) }}">{{ $movie['title'] }}</a></h2>
-                    <div class="movie-detail">
-                        @if (isset($movie['release_date']))
-                        <?php $releaseDate = new DateTime($movie['release_date']); ?>
-                        <span> Release Date:  {{ $releaseDate->format('Y') }}</span>
-                            @endif
-                
-<br> <br>
-                        <span class="vote-average">{{ $movie['vote_average'] }}⭐</span> 
-                        <br> <br>
-                        <form method="POST" action="{{ route('movies.favorite', ['id' => $movie['id'], 'type' => 'movie']) }}">
-    @csrf
-    <input type="hidden" name="type" value="movie">
-    <button type="submit" class="add-favorite-btn">Add to Favorite</button>
-</form>
-
-
-
-
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @else
-        <p>No movies found.</p>
-    @endif
-   
-    
- 
-    </section>
-              
-
-            
-
-       
-        </div>
-      </section>
-
 
       
 
