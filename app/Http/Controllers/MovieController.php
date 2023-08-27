@@ -84,7 +84,7 @@ class MovieController extends Controller
         $movie = $movieResponse->json();
         $contentRatings = $contentRatingsResponse->json();
         $recommendations = $recommendationsResponse->json();
-        // Pass the movie details to the view
+        // Pass the movie details to the view page 
         return view('show', [
             'movie' => $movie,
             'contentRatings' => $contentRatings,
